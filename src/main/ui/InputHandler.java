@@ -71,14 +71,12 @@ public class InputHandler {
     public void playGame(String secretWord) {
 
         Scanner input = new Scanner(System.in);
-
         System.out.println("Start guessing!");
 
         while (!classicHangman.isGameOver()) {
 
             System.out.println("Word: " + classicHangman.getVisibleWord());
             System.out.println("Enter a letter: ");
-
             String strLetter = input.nextLine();
 
             while (true) {
