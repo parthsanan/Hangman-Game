@@ -112,11 +112,19 @@ public class ClassicHangman {
         return secretWord;
     }
 
+    public void setSecretWord(String secretWord) {
+        this.secretWord = secretWord;
+    }
+
     public int getGuessesLeft() {
         return guessesLeft;
     }
 
     public void setGuessesLeft(int guessesLeft) {
         this.guessesLeft = guessesLeft;
+    }
+
+    public void setVisibleWord(String visibleWord) {
+        this.visibleWord = visibleWord;
     }
 }

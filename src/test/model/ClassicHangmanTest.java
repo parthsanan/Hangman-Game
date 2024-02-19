@@ -79,6 +79,12 @@ public class ClassicHangmanTest {
 
                 testClassicHangmanRookie.setGuessesLeft(0);
                 assertTrue(testClassicHangmanRookie.isGameOver());
+
+                testClassicHangmanMaster.setVisibleWord("test");
+                assertFalse(testClassicHangmanMaster.isGameOver());
+
+                testClassicHangmanMaster.setSecretWord(testClassicHangmanMaster.getVisibleWord());
+                assertTrue(testClassicHangmanMaster.isGameOver());
         }
 
         @Test
