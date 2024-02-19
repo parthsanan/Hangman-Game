@@ -8,6 +8,7 @@ public class DrawHangman {
 
     }
 
+    // EFFECTS: Prints the sticks of the hangman basis number of guesses left
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void drawFigure(int guessesLeft) {
 
@@ -58,7 +59,8 @@ public class DrawHangman {
             }
 
             System.out.println("+----------+");
-            System.out.println("\n");
+            System.out.println("");
+
             break;
 
         }
