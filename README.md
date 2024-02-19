@@ -18,9 +18,9 @@ With multiple genres of varying difficulties and a timed mode, it removes all th
 ## User Stories
 1. As a player, I want to start a new game and guess the hidden word letter by letter.
 2. As a player, I want to see my progress in the game, including the hangman drawing and the letters I've guessed.
-3. As a player, I want to be able to pause and resume the game at any time, keeping my state in the game intact.
-4. As a player, I want to choose from different word categories and difficulty levels to keep the game interesting.
-5. As a player, I want to track my scores for my highest score.
+3. <span style="color:red">As a player, I want to be able to pause and resume the game at any time, keeping my state in the game intact.</span>
+4. As a player, I want to choose from different difficulty levels to keep the game interesting.
+5. <span style="color:yellow">As a player, I want to track my scores for my highest score.</span>
 
 ## Implementation
 1. Initially, the aspects of the game can be implemented in the console and later can be easily transferred to a GUI.
