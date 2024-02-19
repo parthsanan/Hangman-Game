@@ -67,6 +67,7 @@ public class InputHandler {
 
 
     // EFFECTS: Check after guess if game is over
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void playGame(String secretWord) {
 
         Scanner input = new Scanner(System.in);
