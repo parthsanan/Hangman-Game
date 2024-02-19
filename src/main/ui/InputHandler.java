@@ -65,7 +65,6 @@ public class InputHandler {
 
     }
 
-
     // EFFECTS: Passes user input guess to check if correct
     public void playGame(String secretWord) {
 
@@ -119,8 +118,6 @@ public class InputHandler {
         }
 
     }
-
-
 
     // EFFECTS: Check if secret word contains letter entered by user
     public void guessLetter(char letter) {

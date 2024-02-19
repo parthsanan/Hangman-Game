@@ -8,8 +8,9 @@ public class ClassicHangman {
 
     private String difficulty;
     private String secretWord;
+    private String visibleWord;
     private int guessesLeft;
-    private List<String> guessedLetters;
+    private List<Character> guessedLetters;
 
     public ClassicHangman(String difficulty) {
 
@@ -39,9 +40,12 @@ public class ClassicHangman {
             }
         }
 
-        return visibleWordBuilder.toString();
+        visibleWord = visibleWordBuilder.toString();
+
+        return visibleWord;
     }
 
+    // REQUIRES: getDifficulty() != null
     // MODIFIES: secretWord
     // EFFECTS: Set secret word depending on getDifficulty()
     public String assignSecretWord() {
@@ -66,10 +70,9 @@ public class ClassicHangman {
             case "Master":
                 return chooseRandom(masterWords);
 
-            default:
-                return null;
-
         }
+
+        return null;
 
     }
 
@@ -83,7 +86,8 @@ public class ClassicHangman {
 
     }
 
-    // EFFECTS: Return true if no guesses left (guessesLeft <= 0) || word guessed by user.
+    // EFFECTS: Return true if no guesses left (guessesLeft <= 0) || word guessed by
+    // user.
     public boolean isGameOver() {
 
         return guessesLeft <= 0 || getVisibleWord().equals(secretWord);
@@ -94,7 +98,7 @@ public class ClassicHangman {
         return difficulty;
     }
 
-    public List getGuessedLetters() {
+    public List<Character> getGuessedLetters() {
         return guessedLetters;
     }
 
