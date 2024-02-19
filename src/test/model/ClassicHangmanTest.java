@@ -14,6 +14,9 @@ public class ClassicHangmanTest {
         ClassicHangman testClassicHangmanRookie;
         ClassicHangman testClassicHangmanNovice;
         ClassicHangman testClassicHangmanMaster;
+        String[] rookieWords;
+        String[] noviceWords;
+        String[] masterWords;
 
         @BeforeEach
         void setupClassicHangmanTest() {
@@ -22,19 +25,29 @@ public class ClassicHangmanTest {
                 testClassicHangmanNovice = new ClassicHangman("Novice");
                 testClassicHangmanMaster = new ClassicHangman("Master");
 
+                rookieWords = new String[] { "apple", "banana", "cat", "dog", "fish", "bird", "tree",
+                        "sun", "moon", "star", "car", "house", "flower", "book", "chair" };
+                noviceWords = new String[] { "elephant", "giraffe", "lion", "monkey", "tiger", "zebra",
+                        "kangaroo", "snake", "rabbit", "turtle", "pizza", "guitar", "computer",
+                        "soccer", "globe" };
+                masterWords = new String[] { "phenomenon", "onomatopoeia", "ubiquitous", "serendipity",
+                        "juxtaposition", "paradox", "synergy", "algorithm", "quantum", "holography",
+                        "architecture", "surreptitious", "chiaroscuro", "mnemonic", "polyglot" };
+
+        }
+
+        @Test
+        void getVisibleWordTest() {
+
+            assertEquals(
+                    testClassicHangmanRookie.getVisibleWord().length(),
+                    testClassicHangmanRookie.getSecretWord().length()
+            );
+
         }
 
         @Test
         void assignSecretWordTest() {
-
-                String[] rookieWords = { "apple", "banana", "cat", "dog", "fish", "bird", "tree",
-                                "sun", "moon", "star", "car", "house", "flower", "book", "chair" };
-                String[] noviceWords = { "elephant", "giraffe", "lion", "monkey", "tiger", "zebra",
-                                "kangaroo", "snake", "rabbit", "turtle", "pizza", "guitar", "computer",
-                                "soccer", "globe" };
-                String[] masterWords = { "phenomenon", "onomatopoeia", "ubiquitous", "serendipity",
-                                "juxtaposition", "paradox", "synergy", "algorithm", "quantum", "holography",
-                                "architecture", "surreptitious", "chiaroscuro", "mnemonic", "polyglot" };
 
                 testClassicHangmanRookie.assignSecretWord();
                 assertTrue(Arrays.asList(rookieWords).contains(testClassicHangmanRookie.getSecretWord()));
@@ -52,15 +65,6 @@ public class ClassicHangmanTest {
 
         @Test
         void chooseRandomTest() {
-
-                String[] rookieWords = { "apple", "banana", "cat", "dog", "fish", "bird", "tree",
-                                "sun", "moon", "star", "car", "house", "flower", "book", "chair" };
-                String[] noviceWords = { "elephant", "giraffe", "lion", "monkey", "tiger", "zebra",
-                                "kangaroo", "snake", "rabbit", "turtle", "pizza", "guitar", "computer",
-                                "soccer", "globe" };
-                String[] masterWords = { "phenomenon", "onomatopoeia", "ubiquitous", "serendipity",
-                                "juxtaposition", "paradox", "synergy", "algorithm", "quantum", "holography",
-                                "architecture", "surreptitious", "chiaroscuro", "mnemonic", "polyglot" };
 
                 assertTrue(Arrays.asList(rookieWords).contains(testClassicHangmanRookie.chooseRandom(rookieWords)));
                 assertFalse(Arrays.asList(rookieWords).contains(testClassicHangmanNovice.chooseRandom(noviceWords)));
@@ -109,15 +113,6 @@ public class ClassicHangmanTest {
 
         @Test
         void getSecretWordTest() {
-
-                String[] rookieWords = { "apple", "banana", "cat", "dog", "fish", "bird", "tree",
-                                "sun", "moon", "star", "car", "house", "flower", "book", "chair" };
-                String[] noviceWords = { "elephant", "giraffe", "lion", "monkey", "tiger", "zebra",
-                                "kangaroo", "snake", "rabbit", "turtle", "pizza", "guitar", "computer",
-                                "soccer", "globe" };
-                String[] masterWords = { "phenomenon", "onomatopoeia", "ubiquitous", "serendipity",
-                                "juxtaposition", "paradox", "synergy", "algorithm", "quantum", "holography",
-                                "architecture", "surreptitious", "chiaroscuro", "mnemonic", "polyglot" };
 
                 assertTrue(Arrays.asList(rookieWords).contains(testClassicHangmanRookie.getSecretWord()));
                 assertTrue(Arrays.asList(noviceWords).contains(testClassicHangmanNovice.getSecretWord()));
