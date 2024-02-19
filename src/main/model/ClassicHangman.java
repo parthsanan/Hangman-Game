@@ -108,6 +108,10 @@ public class ClassicHangman {
         return guessedLetters;
     }
 
+    public void setGuessedLetters(List<Character> guessedLetters) {
+        this.guessedLetters = guessedLetters;
+    }
+
     public String getSecretWord() {
         return secretWord;
     }

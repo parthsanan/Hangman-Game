@@ -39,10 +39,18 @@ public class ClassicHangmanTest {
         @Test
         void getVisibleWordTest() {
 
+            List<Character> charList = new ArrayList<>();
+            charList.add('t');
+            charList.add('a');
+
             assertEquals(
                     testClassicHangmanRookie.getVisibleWord().length(),
                     testClassicHangmanRookie.getSecretWord().length()
             );
+
+            testClassicHangmanNovice.setSecretWord("test");
+            testClassicHangmanNovice.setGuessedLetters(charList);
+            assertEquals("t__t", testClassicHangmanNovice.getVisibleWord());
 
         }
 
