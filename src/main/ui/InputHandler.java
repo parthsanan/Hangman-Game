@@ -66,8 +66,7 @@ public class InputHandler {
     }
 
 
-    // EFFECTS: Check after guess if game is over
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    // EFFECTS: Passes user input guess to check if correct
     public void playGame(String secretWord) {
 
         Scanner input = new Scanner(System.in);
@@ -98,7 +97,14 @@ public class InputHandler {
             }
         }
 
-        if (this.classicHangman.getVisibleWord().equals(secretWord)) {
+        gameResult(secretWord);
+
+    }
+
+    // EFFECTS: Check if game is over
+    public void gameResult(String secretWord) {
+
+        if (classicHangman.getVisibleWord().equals(secretWord)) {
 
             setScore(getScore() + 100);
 
@@ -114,8 +120,9 @@ public class InputHandler {
 
     }
 
+
+
     // EFFECTS: Check if secret word contains letter entered by user
-    @SuppressWarnings({ "checkstyle:EmptyBlock", "checkstyle:SuppressWarnings" })
     public void guessLetter(char letter) {
 
         letter = Character.toLowerCase(letter);
@@ -154,7 +161,6 @@ public class InputHandler {
 
     // MODIFIES: difficulty
     // EFFECTS: sets difficulty basis user input.
-    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
     public String chooseClassicDifficulty() {
 
         System.out.println("Difficulty:" + "\n");
