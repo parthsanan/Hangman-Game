@@ -16,7 +16,8 @@ public class ClassicHangman {
 
         this.difficulty = difficulty;
         this.guessesLeft = 7;
-        this.guessedLetters = new ArrayList<>();
+        this.guessedLetters = new ArrayList<Character>();
+
         this.secretWord = assignSecretWord();
 
     }
@@ -61,19 +62,18 @@ public class ClassicHangman {
 
         switch (getDifficulty()) {
 
+            case "Master":
+                return chooseRandom(masterWords);
+
             case "Novice":
                 return chooseRandom(noviceWords);
 
             case "Rookie":
                 return chooseRandom(rookieWords);
 
-            case "Master":
-                return chooseRandom(masterWords);
-
         }
 
         return null;
-
     }
 
     // REQUIRES: array.length > 0
@@ -96,6 +96,12 @@ public class ClassicHangman {
 
     public String getDifficulty() {
         return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+
+        this.difficulty = difficulty;
+
     }
 
     public List<Character> getGuessedLetters() {

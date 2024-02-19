@@ -98,6 +98,8 @@ public class InputHandler {
 
         gameResult(secretWord);
 
+        input.close();
+
     }
 
     // EFFECTS: Check if game is over
