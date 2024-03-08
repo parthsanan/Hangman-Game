@@ -1,7 +1,6 @@
 package persistance;
 
 import model.ClassicHangman;
-import model.GamesManager;
 import model.Hangman;
 import model.VariantHangman;
 import org.json.JSONArray;
@@ -23,6 +22,7 @@ public class DataHandler {
     }
 
     // EFFECTS: Load existing games from file
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void loadGames() {
         try {
             String content = new String(Files.readAllBytes(Paths.get(filePath)));

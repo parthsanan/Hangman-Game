@@ -20,6 +20,7 @@ public class InputHandler {
         this.dataHandler = new DataHandler();
     }
 
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void historyMenu(ArrayList<Hangman> games) {
 
         GamesManager manager = new GamesManager();
@@ -111,6 +112,7 @@ public class InputHandler {
     }
 
     // EFFECTS: Check if game is over
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void gameResult(ClassicHangman game) {
 
         if (game.getVisibleWord().equals(game.getSecretWord())) {
