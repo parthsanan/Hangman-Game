@@ -5,21 +5,23 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HangmanTest {
 
     private Hangman hangman;
 
     @BeforeEach
     public void setUp() {
-        hangman = new Hangman("easy") {
-            @Override
-            public void playGame() {
-            }
-        };
+        hangman = new ClassicHangman("Rookie");
     }
 
     @Test
     public void testGuessLetter() {
+
+        assertEquals(hangman.getMode(), "Classic");
+        assertEquals(hangman.getDifficulty(), "Rookie");
         // Test guessing a correct letter
         hangman.setSecretWord("test");
         hangman.guessLetter('t');
@@ -61,9 +63,23 @@ public class HangmanTest {
         hangman.guessLetter('t');
         hangman.guessLetter('e');
         hangman.guessLetter('s');
-        hangman.guessLetter('t');
+
+        assertTrue(hangman.getGuessedLetters().contains('t'));
+        assertTrue(hangman.getGuessedLetters().contains('e'));
+        assertTrue(hangman.getGuessedLetters().contains('s'));
+        assertFalse(hangman.getGuessedLetters().contains('f'));
         
         assertTrue(hangman.isGameOver());
+
+        List<Character> guessedLetters = new ArrayList<>();
+        
+        guessedLetters.add('a');
+        guessedLetters.add('b');
+        guessedLetters.add('c');
+
+        hangman.setGuessedLetters(guessedLetters);
+
+        assertEquals(guessedLetters, hangman.getGuessedLetters());
     
     }
 
@@ -97,7 +113,11 @@ public class HangmanTest {
         hangman.guessLetter('i');
         hangman.guessLetter('p');
         hangman.guessLetter('l');
-        assertEquals(hangman.getGuessesLeft(), 0);        
+        
+        assertEquals(hangman.getGuessesLeft(), 0);    
+        hangman.setResult("Won");
+        
+        assertEquals("Won", hangman.getResult());    
         assertTrue(hangman.isGameOver());    
     }
 

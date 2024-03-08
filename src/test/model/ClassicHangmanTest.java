@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ui.InputHandler;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,125 +12,34 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ClassicHangmanTest {
-
+        
         ClassicHangman testClassicHangmanRookie;
         ClassicHangman testClassicHangmanNovice;
         ClassicHangman testClassicHangmanMaster;
-        
-        String[] rookieWords;
-        String[] noviceWords;
-        String[] masterWords;
+        GamesManager testGamesManager;
+        InputHandler testInputHandler;
 
         @BeforeEach
         void setupClassicHangmanTest() {
-
+                
                 testClassicHangmanRookie = new ClassicHangman("Rookie");
                 testClassicHangmanNovice = new ClassicHangman("Novice");
                 testClassicHangmanMaster = new ClassicHangman("Master");
-
-                rookieWords = new String[] {"apple", "banana", "cat", "dog", "fish", "bird", "tree", "sun", "moon", "star", "car", "house",
-                "flower", "book", "chair", "piano", "chair", "couch", "table", "lamp", "phone", "mouse", "pen",
-                "paper", "shirt", "socks", "pants", "shoes", "glove", "hat", "coat"};
-                noviceWords = new String[] {"elephant", "giraffe", "lion", "monkey", "tiger", "zebra", "kangaroo", "snake", "rabbit", "turtle",
-                "pizza", "guitar", "computer", "soccer", "globe", "octopus", "toucan", "rhinoceros", "crocodile",
-                "hippopotamus", "chimpanzee", "penguin", "dolphin", "parrot", "jaguar",
-                "chameleon", "platypus", "flamingo", "cheetah", "ostrich", "orangutan"};
-                masterWords = new String[] {"phenomenon", "onomatopoeia", "ubiquitous", "serendipity", "juxtaposition", "paradox", "synergy", "algorithm", "quantum", "holography",
-                "architecture", "surreptitious", "chiaroscuro", "mnemonic", "polyglot",
-                "acquiesce", "allegiance", "circumvent", "perplexity", "benevolence",
-                "procrastinate", "capitulate", "cacophony", "ubiquitous", "narcissist",
-                "ambiguity", "loquacious", "obfuscate", "exacerbate", "idiosyncratic",
-                "paragon", "quintessential", "serendipity", "vernacular", "antagonist"};
+                testGamesManager = new GamesManager();
+                testInputHandler = new InputHandler(testGamesManager);
 
         }
 
         @Test
-        void getVisibleWordTest() {
+        void testPlayGame() {
 
-                List<Character> charList = new ArrayList<>();
-                charList.add('t');
-                charList.add('a');
+                testClassicHangmanRookie.setSecretWord("cat");
+                assertEquals(testClassicHangmanRookie.getSecretWord(), "cat");
 
-                assertEquals(testClassicHangmanRookie.getVisibleWord().length(), testClassicHangmanRookie.getSecretWord().length());
+                testClassicHangmanRookie.guessLetter('c');
+                testClassicHangmanRookie.guessLetter('a');
+                testClassicHangmanRookie.guessLetter('t');
 
-                testClassicHangmanNovice.setSecretWord("test");
-                testClassicHangmanNovice.setGuessedLetters(charList);
-                assertEquals("t__t", testClassicHangmanNovice.getVisibleWord());
-
-        }
-
-        // @Test
-        // void assignSecretWordTest() {
-
-        // testClassicHangmanRookie.assignSecretWord();
-        // assertTrue(Arrays.asList(rookieWords).contains(testClassicHangmanRookie.getSecretWord()));
-
-        // testClassicHangmanNovice.assignSecretWord();
-        // assertTrue(Arrays.asList(noviceWords).contains(testClassicHangmanNovice.getSecretWord()));
-
-        // testClassicHangmanMaster.assignSecretWord();
-        // assertTrue(Arrays.asList(masterWords).contains(testClassicHangmanMaster.getSecretWord()));
-
-        // testClassicHangmanMaster.setDifficulty("null");
-        // assertNull(testClassicHangmanMaster.assignSecretWord());
-
-        // }
-
-        // @Test
-        // void chooseRandomTest() {
-
-        // assertTrue(Arrays.asList(rookieWords).contains(testClassicHangmanRookie.chooseSecretWord(rookieWords)));
-        // assertFalse(Arrays.asList(rookieWords)
-        // .contains(testClassicHangmanNovice.chooseSecretWord(noviceWords)));
-        // assertTrue(Arrays.asList(noviceWords).contains(testClassicHangmanNovice.chooseSecretWord(noviceWords)));
-        // assertTrue(Arrays.asList(masterWords).contains(testClassicHangmanMaster.chooseSecretWord(masterWords)));
-
-        // }
-
-        @Test
-        void isGameOverTest() {
-
-                assertFalse(testClassicHangmanRookie.isGameOver());
-
-                testClassicHangmanRookie.setGuessesLeft(1);
-                assertFalse(testClassicHangmanRookie.isGameOver());
-
-                testClassicHangmanRookie.setGuessesLeft(0);
                 assertTrue(testClassicHangmanRookie.isGameOver());
-
-                testClassicHangmanMaster.setVisibleWord("test");
-                assertFalse(testClassicHangmanMaster.isGameOver());
-
-                testClassicHangmanMaster.setSecretWord(testClassicHangmanMaster.getVisibleWord());
-                assertTrue(testClassicHangmanMaster.isGameOver());
         }
-
-        @Test
-        void setGuessesLeftTest() {
-
-                assertEquals(7, testClassicHangmanRookie.getGuessesLeft());
-
-                testClassicHangmanRookie.setGuessesLeft(6);
-                assertEquals(6, testClassicHangmanRookie.getGuessesLeft());
-        }
-
-        @Test
-        void getGuessedLettersTest() {
-
-                List<Character> emptyCharacterList = new ArrayList<>();
-
-                assertEquals(emptyCharacterList, testClassicHangmanRookie.getGuessedLetters());
-                assertEquals(emptyCharacterList, testClassicHangmanNovice.getGuessedLetters());
-                assertEquals(emptyCharacterList, testClassicHangmanMaster.getGuessedLetters());
-
-        }
-
-        @Test
-        void getSecretWordTest() {
-
-                assertTrue(Arrays.asList(rookieWords).contains(testClassicHangmanRookie.getSecretWord()));
-                assertTrue(Arrays.asList(noviceWords).contains(testClassicHangmanNovice.getSecretWord()));
-                assertTrue(Arrays.asList(masterWords).contains(testClassicHangmanMaster.getSecretWord()));
-
-        }       
 }

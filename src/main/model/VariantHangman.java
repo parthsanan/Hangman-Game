@@ -8,7 +8,7 @@ public class VariantHangman extends Hangman {
     }
 
     @Override
-    public void playGame() {
+    public void playGame(GamesManager manager) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'playGame'");
     }

@@ -8,7 +8,7 @@ public class Main {
 
         DrawHangman drawer = new DrawHangman();
         GamesManager manager = new GamesManager();
-        InputHandler inputHandler = new InputHandler();
+        InputHandler inputHandler = new InputHandler(manager);
 
         drawer.startImage();
         manager.getMenu(inputHandler);

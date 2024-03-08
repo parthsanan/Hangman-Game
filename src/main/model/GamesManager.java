@@ -60,7 +60,7 @@ public class GamesManager {
 
             }
 
-            currentGame.playGame();
+            currentGame.playGame(this);
 
         } else if (mode.equals("History")) {
 

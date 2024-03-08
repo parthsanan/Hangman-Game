@@ -26,7 +26,7 @@ public abstract class Hangman {
 
     }
 
-    public abstract void playGame();
+    public abstract void playGame(GamesManager manager);
 
     // EFFECTS: Check if secret word contains letter entered by user
     public void guessLetter(char letter) {
@@ -139,10 +139,6 @@ public abstract class Hangman {
 
     public void setGuessesLeft(int guessesLeft) {
         this.guessesLeft = guessesLeft;
-    }
-
-    public void setVisibleWord(String visibleWord) {
-        this.visibleWord = visibleWord;
     }
 
     public int getScore() {

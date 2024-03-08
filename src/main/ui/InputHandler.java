@@ -17,8 +17,8 @@ public class InputHandler {
     private DataHandler dataHandler;
     private GamesManager manager;
 
-    public InputHandler() {
-        this.manager = new GamesManager();
+    public InputHandler(GamesManager manager) {
+        this.manager = manager;
         this.dataHandler = new DataHandler();
     }
 

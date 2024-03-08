@@ -12,10 +12,9 @@ public class ClassicHangman extends Hangman {
     }
 
     @Override
-    public void playGame() {
-
-        GamesManager gamesManager = new GamesManager();
-        InputHandler inputHandler = new InputHandler();
+    public void playGame(GamesManager gamesManager) {
+        
+        InputHandler inputHandler = new InputHandler(gamesManager);
 
         switch (getDifficulty()) {
             case "Master":
