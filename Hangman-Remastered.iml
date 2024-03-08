@@ -29,7 +29,7 @@
     </orderEntry>
     <orderEntry type="library" name="googlecode.lanterna" level="project" />
     <orderEntry type="library" name="apache.commons.lang3" level="project" />
-    <orderEntry type="library" name="jacoco.maven.plugin" level="project" />
     <orderEntry type="library" name="json" level="project" />
+    <orderEntry type="library" name="jacoco.report" level="project" />
   </component>
 </module>

@@ -19,7 +19,7 @@ public abstract class Hangman {
 
     public Hangman(String difficulty) {
 
-        this.difficulty = difficulty;
+        this.difficulty = difficulty;   
         this.guessesLeft = 7;
         this.score = 0;
         this.guessedLetters = new ArrayList<Character>();

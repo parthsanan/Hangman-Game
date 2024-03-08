@@ -26,14 +26,19 @@ public class ClassicHangmanTest {
                 testClassicHangmanNovice = new ClassicHangman("Novice");
                 testClassicHangmanMaster = new ClassicHangman("Master");
 
-                rookieWords = new String[] { "apple", "banana", "cat", "dog", "fish", "bird", "tree",
-                                "sun", "moon", "star", "car", "house", "flower", "book", "chair" };
-                noviceWords = new String[] { "elephant", "giraffe", "lion", "monkey", "tiger", "zebra",
-                                "kangaroo", "snake", "rabbit", "turtle", "pizza", "guitar", "computer",
-                                "soccer", "globe" };
-                masterWords = new String[] { "phenomenon", "onomatopoeia", "ubiquitous", "serendipity",
-                                "juxtaposition", "paradox", "synergy", "algorithm", "quantum", "holography",
-                                "architecture", "surreptitious", "chiaroscuro", "mnemonic", "polyglot" };
+                rookieWords = new String[] {"apple", "banana", "cat", "dog", "fish", "bird", "tree", "sun", "moon", "star", "car", "house",
+                "flower", "book", "chair", "piano", "chair", "couch", "table", "lamp", "phone", "mouse", "pen",
+                "paper", "shirt", "socks", "pants", "shoes", "glove", "hat", "coat"};
+                noviceWords = new String[] {"elephant", "giraffe", "lion", "monkey", "tiger", "zebra", "kangaroo", "snake", "rabbit", "turtle",
+                "pizza", "guitar", "computer", "soccer", "globe", "octopus", "toucan", "rhinoceros", "crocodile",
+                "hippopotamus", "chimpanzee", "penguin", "dolphin", "parrot", "jaguar",
+                "chameleon", "platypus", "flamingo", "cheetah", "ostrich", "orangutan"};
+                masterWords = new String[] {"phenomenon", "onomatopoeia", "ubiquitous", "serendipity", "juxtaposition", "paradox", "synergy", "algorithm", "quantum", "holography",
+                "architecture", "surreptitious", "chiaroscuro", "mnemonic", "polyglot",
+                "acquiesce", "allegiance", "circumvent", "perplexity", "benevolence",
+                "procrastinate", "capitulate", "cacophony", "ubiquitous", "narcissist",
+                "ambiguity", "loquacious", "obfuscate", "exacerbate", "idiosyncratic",
+                "paragon", "quintessential", "serendipity", "vernacular", "antagonist"};
 
         }
 
@@ -44,9 +49,7 @@ public class ClassicHangmanTest {
                 charList.add('t');
                 charList.add('a');
 
-                assertEquals(
-                                testClassicHangmanRookie.getVisibleWord().length(),
-                                testClassicHangmanRookie.getSecretWord().length());
+                assertEquals(testClassicHangmanRookie.getVisibleWord().length(), testClassicHangmanRookie.getSecretWord().length());
 
                 testClassicHangmanNovice.setSecretWord("test");
                 testClassicHangmanNovice.setGuessedLetters(charList);
@@ -127,5 +130,5 @@ public class ClassicHangmanTest {
                 assertTrue(Arrays.asList(noviceWords).contains(testClassicHangmanNovice.getSecretWord()));
                 assertTrue(Arrays.asList(masterWords).contains(testClassicHangmanMaster.getSecretWord()));
 
-        }
+        }       
 }
