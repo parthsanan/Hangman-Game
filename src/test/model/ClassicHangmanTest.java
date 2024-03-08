@@ -37,5 +37,20 @@ public class ClassicHangmanTest {
                 testClassicHangmanRookie.guessLetter('t');
 
                 assertTrue(testClassicHangmanRookie.isGameOver());
+
+                testGamesManager.rookieWords = new String[]{"cat"};
+                testGamesManager.noviceWords = new String[]{"dog"};
+                testGamesManager.masterWords = new String[]{"elephant"};
+
+                
+                testClassicHangmanRookie.setSecretWord("cat");
+
+                testClassicHangmanRookie.setGuessesLeft(0);
+
+                
+                testClassicHangmanRookie.playGame(testGamesManager);
+
+                
+                assertTrue(testClassicHangmanRookie.isGameOver());
         }
 }

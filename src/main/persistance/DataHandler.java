@@ -16,10 +16,11 @@ import java.util.ArrayList;
 
 public class DataHandler {
 
-    protected final String filePath = "./src/main/data/games.json";
+    protected String filePath;
     protected ArrayList<Hangman> gamesPlayed;
 
     public DataHandler() {
+        this.filePath = "./src/main/data/games.json";
         this.gamesPlayed = new ArrayList<>();
     }
 
@@ -113,4 +114,7 @@ public class DataHandler {
         return this.gamesPlayed;
     }
 
+    public void setFilePath(String path) {
+        this.filePath = path;
+    }
 }
