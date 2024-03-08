@@ -15,15 +15,15 @@ public class InputHandler {
     private String classicDifficulty;
     private static Scanner input = new Scanner(System.in);
     private DataHandler dataHandler;
+    private GamesManager manager;
 
     public InputHandler() {
+        this.manager = new GamesManager();
         this.dataHandler = new DataHandler();
     }
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    public void historyMenu(ArrayList<Hangman> games) {
-
-        GamesManager manager = new GamesManager();
+    public void historyMenu(ArrayList<Hangman> loadedGames) {
 
         System.out.println("1. Load All Previous Games" + "\n");
         System.out.println("2. Game Archive (View All Games Played)" + "\n");
@@ -37,12 +37,12 @@ public class InputHandler {
         switch (choice) {
 
             case "1":
-                dataHandler.loadGames();
+                dataHandler.loadGames(manager);
                 break;
 
             case "2":
 
-                if (games.size() == 0) {
+                if (manager.getLoadedGames().size() == 0) {
 
                     System.out.println("No Games Loaded!" + "\n");
 
@@ -51,7 +51,7 @@ public class InputHandler {
                     System.out.println("All time high score: " + dataHandler.getHighScore() + "\n");
                     System.out.println("Game History:" + "\n");
 
-                    for (Hangman game : games) {
+                    for (Hangman game : manager.getLoadedGames()) {
 
                         System.out.println("===========================");
                         System.out.println("Result: " + game.getResult() + "\n");
@@ -69,7 +69,7 @@ public class InputHandler {
                 break;
 
             case "3":
-                manager.getMenu();
+                manager.getMenu(this);
                 break;
 
             case "4":
@@ -81,7 +81,7 @@ public class InputHandler {
 
         }
 
-        historyMenu(dataHandler.getGamesPlayed());
+        historyMenu(manager.getLoadedGames());
 
     }
 
@@ -137,13 +137,10 @@ public class InputHandler {
         System.out.println("2 -> No");
 
         String choice = input.next();
-        GamesManager manager = new GamesManager();
-        DataHandler dataHandler = new DataHandler();
 
         switch (choice) {
             case "1":
-                dataHandler.loadGames();
-                dataHandler.addGame(game);
+                dataHandler.saveGame(game);
                 System.out.println("Game Saved!" + "\n");
                 break;
 
@@ -154,7 +151,7 @@ public class InputHandler {
                 break;
         }
 
-        manager.getMenu();
+        manager.getMenu(this);
     }
 
     // REQUIRES: choice is int

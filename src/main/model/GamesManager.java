@@ -8,17 +8,17 @@ import java.util.ArrayList;
 public class GamesManager {
 
     protected ArrayList<Hangman> gamesPlayed;
-    protected InputHandler inputHandler;
     protected DataHandler dataHandler;
-    protected Hangman currentGame;
+    protected Hangman currentGame;    
+    ArrayList<Hangman> loadedGames;
 
     protected String[] rookieWords;
     protected String[] noviceWords;
     protected String[] masterWords;
 
     public GamesManager() {
-        this.inputHandler = new InputHandler();
         this.dataHandler = new DataHandler();
+        this.loadedGames = new ArrayList<>();
 
         this.rookieWords = new String[] {
                 "apple", "banana", "cat", "dog", "fish", "bird", "tree", "sun", "moon", "star", "car", "house",
@@ -42,7 +42,7 @@ public class GamesManager {
         };
     }
 
-    public void getMenu() {
+    public void getMenu(InputHandler inputHandler) {
 
         String mode = inputHandler.chooseMode();
 
@@ -64,9 +64,21 @@ public class GamesManager {
 
         } else if (mode.equals("History")) {
 
-            inputHandler.historyMenu(dataHandler.getGamesPlayed());
+            inputHandler.historyMenu(loadedGames);
 
         }
 
+    }
+
+    public ArrayList<Hangman> getLoadedGames() {
+        return this.loadedGames;
+    }
+
+    public void addToLoadedGames(Hangman game) {
+        this.loadedGames.add(game);
+    }
+
+    public void setLoadedGames(ArrayList<Hangman> games) {
+        this.loadedGames = games;
     }
 }

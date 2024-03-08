@@ -1,8 +1,10 @@
 package persistance;
 
 import model.ClassicHangman;
+import model.GamesManager;
 import model.Hangman;
 import model.VariantHangman;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -23,7 +25,10 @@ public class DataHandler {
 
     // EFFECTS: Load existing games from file
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    public void loadGames() {
+    public void loadGames(GamesManager manager) {
+
+        manager.setLoadedGames(new ArrayList<Hangman>());
+        
         try {
             String content = new String(Files.readAllBytes(Paths.get(filePath)));
             JSONArray jsonArray = new JSONArray(content);
@@ -44,49 +49,51 @@ public class DataHandler {
                 } else if (mode.equals("Variant")) {
                     game = new VariantHangman(difficulty);
                 }
+                
                 game.setResult(result);
                 game.setMode(mode);
                 game.setSecretWord(secretWord);
                 game.setScore(score);
                 game.setGuessesLeft(guessesLeft);
-                addGame(game);
+                
+                manager.addToLoadedGames(game);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        System.out.println(getGamesPlayed().size() + " Games Loaded!" + "\n");
+        System.out.println(manager.getLoadedGames().size() + " Games Loaded!" + "\n");
     }
 
     // Save list of games to file
-    public void saveGames(ArrayList<Hangman> gamesPlayed) {
-        JSONArray jsonArray = new JSONArray();
-
-        for (Hangman game : gamesPlayed) {
-            JSONObject jsonObject = new JSONObject();
-
-            jsonObject.put("result", game.getResult());
-            jsonObject.put("mode", game.getMode());
-            jsonObject.put("difficulty", game.getDifficulty());
-            jsonObject.put("secretWord", game.getSecretWord());
-            jsonObject.put("guessesLeft", game.getGuessesLeft());
-            jsonObject.put("score", game.getScore());
-            jsonArray.put(jsonObject);
+    public void saveGame(Hangman game) {
+        JSONArray jsonArray;
+        
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(filePath)));
+            jsonArray = new JSONArray(content);
+        } catch (IOException e) {
+            jsonArray = new JSONArray();
         }
 
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("result", game.getResult());
+        jsonObject.put("mode", game.getMode());
+        jsonObject.put("difficulty", game.getDifficulty());
+        jsonObject.put("secretWord", game.getSecretWord());
+        jsonObject.put("guessesLeft", game.getGuessesLeft());
+        jsonObject.put("score", game.getScore());
+        jsonArray.put(jsonObject);
+
         try (FileWriter fileWriter = new FileWriter(filePath)) {
-
             fileWriter.write(jsonArray.toString());
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public Integer getHighScore() {
-
-        loadGames();
 
         Integer highScore = 0;
 
@@ -100,11 +107,6 @@ public class DataHandler {
         }
 
         return highScore;
-    }
-
-    public void addGame(Hangman game) {
-        gamesPlayed.add(game);
-        saveGames(gamesPlayed);
     }
 
     public ArrayList<Hangman> getGamesPlayed() {

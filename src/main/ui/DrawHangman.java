@@ -42,55 +42,49 @@ public class DrawHangman {
 
         System.out.println("+----------+");
 
-        while (true) {
+        if (guessesLeft <= 6) {
+            System.out.println("|          |");
+        }
 
-            if (guessesLeft <= 6) {
-                System.out.println("|          |");
+        if (guessesLeft <= 5) {
+            System.out.println("|          O");
+        }
+
+        if (guessesLeft <= 4) {
+            System.out.print("|         \\");
+
+            if (guessesLeft <= 3) {
+
+                System.out.println(" /");
+
+            } else {
+
+                System.out.println();
             }
+        }
 
-            if (guessesLeft <= 5) {
-                System.out.println("|          O");
-            }
+        if (guessesLeft <= 2) {
 
-            if (guessesLeft <= 4) {
-                System.out.print("|         \\");
-
-                if (guessesLeft <= 3) {
-
-                    System.out.println(" /");
-
-                } else {
-
-                    System.out.println();
-                }
-            }
-
-            if (guessesLeft <= 2) {
-
-                System.out.println("|          |");
-
-            }
-
-            if (guessesLeft <= 1) {
-
-                System.out.print("|         /");
-
-                if (guessesLeft <= 0) {
-
-                    System.out.println(" \\");
-
-                } else {
-
-                    System.out.println();
-
-                }
-            }
-
-            System.out.println("+----------+");
-            System.out.println();
-
-            break;
+            System.out.println("|          |");
 
         }
+
+        if (guessesLeft <= 1) {
+
+            System.out.print("|         /");
+
+            if (guessesLeft <= 0) {
+
+                System.out.println(" \\");
+
+            } else {
+
+                System.out.println();
+
+            }
+        }
+
+        System.out.println("+----------+");
+        System.out.println();
     }
 }

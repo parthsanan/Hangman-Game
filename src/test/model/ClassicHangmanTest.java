@@ -14,6 +14,7 @@ public class ClassicHangmanTest {
         ClassicHangman testClassicHangmanRookie;
         ClassicHangman testClassicHangmanNovice;
         ClassicHangman testClassicHangmanMaster;
+        
         String[] rookieWords;
         String[] noviceWords;
         String[] masterWords;
