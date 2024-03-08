@@ -1,50 +1,173 @@
 package ui;
 
 import model.ClassicHangman;
+import model.GamesManager;
+import model.Hangman;
+import persistance.DataHandler;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InputHandler {
 
-    private int choice;
-    private int score;
     private String gameMode;
     private String variantMode;
     private String classicDifficulty;
-    private Scanner input = new Scanner(System.in);
-    private ClassicHangman classicHangman;
+    private static Scanner input = new Scanner(System.in);
+    private DataHandler dataHandler;
 
     public InputHandler() {
+        this.dataHandler = new DataHandler();
+    }
 
-        this.score = 0;
+    public void historyMenu(ArrayList<Hangman> games) {
 
-        System.out.println("Welcome to Hangman: Remastered!" + "\n");
+        GamesManager manager = new GamesManager();
 
-        chooseMode();
+        System.out.println("1. Load All Previous Games" + "\n");
+        System.out.println("2. Game Archive (View All Games Played)" + "\n");
+        System.out.println("3. Main Menu" + "\n");
+        System.out.println("4. Quit" + "\n");
+        System.out.print("-> ");
+        String choice = input.next();
 
-        if (gameMode == "Classic") {
+        System.out.println();
 
-            classicHangman = new ClassicHangman(chooseClassicDifficulty());
-            playGame(classicHangman.getSecretWord());
+        switch (choice) {
 
-        } else if (gameMode == "Variant") {
+            case "1":
+                dataHandler.loadGames();
+                break;
 
-            chooseVariantMode();
+            case "2":
+
+                if (games.size() == 0) {
+
+                    System.out.println("No Games Loaded!" + "\n");
+
+                } else {
+
+                    System.out.println("All time high score: " + dataHandler.getHighScore() + "\n");
+                    System.out.println("Game History:" + "\n");
+
+                    for (Hangman game : games) {
+
+                        System.out.println("===========================");
+                        System.out.println("Result: " + game.getResult() + "\n");
+                        System.out.println("Mode: " + game.getMode() + "\n");
+                        System.out.println("Difficulty: " + game.getDifficulty() + "\n");
+                        System.out.println("Score: " + game.getScore() + "\n");
+                        System.out.println("Guesses Left: " + game.getGuessesLeft() + "\n");
+                        System.out.println("Secret Word: " + game.getSecretWord());
+                        System.out.println("===========================");
+                        System.out.println();
+                    }
+
+                }
+
+                break;
+
+            case "3":
+                manager.getMenu();
+                break;
+
+            case "4":
+                System.out.println("Bye!");
+                System.exit(0);
+
+            default:
+                break;
 
         }
 
+        historyMenu(dataHandler.getGamesPlayed());
+
+    }
+
+    // EFFECTS: Passes user input guess to check if correct
+    public void getGuess(ClassicHangman game) {
+
+        System.out.println("Word: " + game.getVisibleWord());
+        System.out.print("Enter a letter: ");
+        String strLetter = input.nextLine();
+
+        while (true) {
+
+            if (strLetter.matches("[A-Za-z]+")) {
+
+                char charLetter = strLetter.charAt(0);
+
+                game.guessLetter(charLetter);
+
+            } else {
+
+                System.out.println("Invalid Input" + "\n");
+
+            }
+
+            break;
+        }
+
+    }
+
+    // EFFECTS: Check if game is over
+    public void gameResult(ClassicHangman game) {
+
+        if (game.getVisibleWord().equals(game.getSecretWord())) {
+
+            game.setScore(game.getScore() + 100);
+
+            System.out.println("Congratulations! You WON!");
+            System.out.println("Score: " + game.getScore());
+            game.setResult("Won");
+
+        } else {
+
+            System.out.println("Sorry, you LOST, the word was: " + game.getSecretWord());
+            System.out.println("Score: " + game.getScore());
+            game.setResult("Lost");
+
+        }
+
+        System.out.println();
+        System.out.println("Do you want to save the game?");
+        System.out.println("1 -> Yes");
+        System.out.println("2 -> No");
+
+        String choice = input.next();
+        GamesManager manager = new GamesManager();
+        DataHandler dataHandler = new DataHandler();
+
+        switch (choice) {
+            case "1":
+                dataHandler.loadGames();
+                dataHandler.addGame(game);
+                System.out.println("Game Saved!" + "\n");
+                break;
+
+            case "2":
+                System.out.println("Game Not Saved!" + "\n");
+
+            default:
+                break;
+        }
+
+        manager.getMenu();
     }
 
     // REQUIRES: choice is int
     // MODIFIES: gameMode
     // EFFECTS: sets game mode basis user input.
-    public void chooseMode() {
+    public String chooseMode() {
 
         System.out.println("Game Mode:" + "\n");
         System.out.println("1. Classic" + "\n");
         System.out.println("2. Variant" + "\n");
+        System.out.println("3. History" + "\n");
+        System.out.println("4. Quit" + "\n");
+        System.out.print("-> ");
 
-        choice = input.nextInt();
+        int choice = input.nextInt();
 
         if (choice == 1) {
 
@@ -53,6 +176,16 @@ public class InputHandler {
         } else if (choice == 2) {
 
             setGameMode("Variant");
+
+        } else if (choice == 3) {
+
+            setGameMode("History");
+
+        } else if (choice == 4) {
+
+            System.out.println();
+            System.out.println("Bye!");
+            System.exit(0);
 
         } else {
 
@@ -63,98 +196,7 @@ public class InputHandler {
 
         System.out.println("You chose: " + getGameMode() + "\n");
 
-    }
-
-    // EFFECTS: Passes user input guess to check if correct
-    public void playGame(String secretWord) {
-
-        Scanner input = new Scanner(System.in);
-        System.out.println("Start guessing!");
-
-        while (!classicHangman.isGameOver()) {
-
-            System.out.println("Word: " + classicHangman.getVisibleWord());
-            System.out.println("Enter a letter: ");
-            String strLetter = input.nextLine();
-
-            while (true) {
-
-                if (strLetter.matches("[A-Za-z]+")) {
-
-                    char charLetter = strLetter.charAt(0);
-
-                    guessLetter(charLetter);
-                    new DrawHangman(classicHangman.getGuessesLeft());
-
-                } else {
-
-                    System.out.println("Invalid Input" + "\n");
-
-                }
-
-                break;
-            }
-        }
-
-        gameResult(secretWord);
-
-        input.close();
-
-    }
-
-    // EFFECTS: Check if game is over
-    public void gameResult(String secretWord) {
-
-        if (classicHangman.getVisibleWord().equals(secretWord)) {
-
-            setScore(getScore() + 100);
-
-            System.out.println("Congratulations! You WON!");
-            System.out.println("Score: " + getScore());
-
-        } else {
-
-            System.out.println("Sorry, you LOST, the word was: " + secretWord);
-            System.out.println("Score: " + getScore());
-
-        }
-
-    }
-
-    // EFFECTS: Check if secret word contains letter entered by user
-    public void guessLetter(char letter) {
-
-        letter = Character.toLowerCase(letter);
-
-        if (classicHangman.getGuessedLetters().contains(letter)) {
-
-            System.out.println("\n" + "You've already guessed that letter.");
-
-        } else {
-
-            classicHangman.getGuessedLetters().add(letter);
-
-            if (classicHangman.getSecretWord().contains(Character.toString(letter))) {
-
-                setScore(getScore() + 10);
-
-                System.out.println("\n" + "Correct guess!");
-
-            } else {
-
-                classicHangman.setGuessesLeft(classicHangman.getGuessesLeft() - 1);
-
-                System.out.println("\n" + "Incorrect guess!");
-
-            }
-
-        }
-
-        System.out.println("Attempts left: " + classicHangman.getGuessesLeft());
-        System.out.println("Score: " + getScore());
-        System.out.println("");
-
-        classicHangman.isGameOver();
+        return getGameMode();
 
     }
 
@@ -166,8 +208,9 @@ public class InputHandler {
         System.out.println("1. Rookie" + "\n");
         System.out.println("2. Novice" + "\n");
         System.out.println("3. Master" + "\n");
+        System.out.print("-> ");
 
-        choice = input.nextInt();
+        int choice = input.nextInt();
 
         if (choice == 1) {
 
@@ -190,13 +233,14 @@ public class InputHandler {
 
     // MODIFIES: variantMode
     // EFFECTS: sets variant mode basis user input.
-    public void chooseVariantMode() {
+    public String chooseVariantMode() {
 
         System.out.println("Choose Variant:" + "\n");
         System.out.println("1. Timed" + "\n");
         System.out.println("2. Survival" + "\n");
+        System.out.print("-> ");
 
-        choice = input.nextInt();
+        int choice = input.nextInt();
 
         if (choice == 1) {
 
@@ -210,6 +254,7 @@ public class InputHandler {
 
         System.out.println("You chose: " + getVariantMode() + "\n");
 
+        return getVariantMode();
     }
 
     public void setGameMode(String gameMode) {
@@ -218,14 +263,6 @@ public class InputHandler {
 
     public String getGameMode() {
         return gameMode;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public int getScore() {
-        return this.score;
     }
 
     public String getClassicDifficulty() {

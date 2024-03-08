@@ -1,134 +1,43 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import ui.InputHandler;
 
-public class ClassicHangman {
-
-    private String difficulty;
-    private String secretWord;
-    private String visibleWord;
-    private int guessesLeft;
-    private List<Character> guessedLetters;
+public class ClassicHangman extends Hangman {
 
     public ClassicHangman(String difficulty) {
 
-        this.difficulty = difficulty;
-        this.guessesLeft = 7;
-        this.guessedLetters = new ArrayList<Character>();
-
-        this.secretWord = assignSecretWord();
+        super(difficulty);
+        setMode("Classic");
 
     }
 
-    // MODIFIES: visibleWordBuilder
-    // EFFECTS: Returns word visible on terminal
-    public String getVisibleWord() {
+    @Override
+    public void playGame() {
 
-        StringBuilder visibleWordBuilder = new StringBuilder();
-
-        for (char letter : secretWord.toCharArray()) {
-
-            if (guessedLetters.contains(letter)) {
-
-                visibleWordBuilder.append(letter);
-
-            } else {
-
-                visibleWordBuilder.append('_');
-
-            }
-        }
-
-        visibleWord = visibleWordBuilder.toString();
-
-        return visibleWord;
-    }
-
-    // REQUIRES: getDifficulty() != null
-    // MODIFIES: secretWord
-    // EFFECTS: Set secret word depending on getDifficulty()
-    public String assignSecretWord() {
-
-        String[] rookieWords = { "apple", "banana", "cat", "dog", "fish", "bird", "tree",
-                "sun", "moon", "star", "car", "house", "flower", "book", "chair" };
-        String[] noviceWords = { "elephant", "giraffe", "lion", "monkey", "tiger", "zebra",
-                "kangaroo", "snake", "rabbit", "turtle", "pizza", "guitar", "computer",
-                "soccer", "globe" };
-        String[] masterWords = { "phenomenon", "onomatopoeia", "ubiquitous", "serendipity",
-                "juxtaposition", "paradox", "synergy", "algorithm", "quantum", "holography",
-                "architecture", "surreptitious", "chiaroscuro", "mnemonic", "polyglot" };
+        GamesManager gamesManager = new GamesManager();
+        InputHandler inputHandler = new InputHandler();
 
         switch (getDifficulty()) {
-
             case "Master":
-                return chooseRandom(masterWords);
+                chooseSecretWord(gamesManager.masterWords);
+                break;
 
             case "Novice":
-                return chooseRandom(noviceWords);
+                chooseSecretWord(gamesManager.noviceWords);
+                break;
 
             case "Rookie":
-                return chooseRandom(rookieWords);
+                chooseSecretWord(gamesManager.rookieWords);
+                break;
+        }
+
+        while (!isGameOver()) {
+
+            inputHandler.getGuess(this);
 
         }
 
-        return null;
+        inputHandler.gameResult(this);
     }
 
-    // REQUIRES: array.length > 0
-    // EFFECTS: Choose random word from array
-    public String chooseRandom(String[] array) {
-
-        Random generator = new Random();
-
-        return array[generator.nextInt(array.length)];
-
-    }
-
-    // EFFECTS: Return true if no guesses left (guessesLeft <= 0) || word guessed by
-    // user.
-    public boolean isGameOver() {
-
-        return guessesLeft <= 0 || getVisibleWord().equals(secretWord);
-
-    }
-
-    public String getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(String difficulty) {
-
-        this.difficulty = difficulty;
-
-    }
-
-    public List<Character> getGuessedLetters() {
-        return guessedLetters;
-    }
-
-    public void setGuessedLetters(List<Character> guessedLetters) {
-        this.guessedLetters = guessedLetters;
-    }
-
-    public String getSecretWord() {
-        return secretWord;
-    }
-
-    public void setSecretWord(String secretWord) {
-        this.secretWord = secretWord;
-    }
-
-    public int getGuessesLeft() {
-        return guessesLeft;
-    }
-
-    public void setGuessesLeft(int guessesLeft) {
-        this.guessesLeft = guessesLeft;
-    }
-
-    public void setVisibleWord(String visibleWord) {
-        this.visibleWord = visibleWord;
-    }
 }

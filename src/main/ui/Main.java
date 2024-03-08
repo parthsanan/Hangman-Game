@@ -1,10 +1,16 @@
 package ui;
 
+import model.GamesManager;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        new InputHandler();
+        DrawHangman drawer = new DrawHangman();
+        GamesManager manager = new GamesManager();
+
+        drawer.startImage();
+        manager.getMenu();
 
     }
 }
