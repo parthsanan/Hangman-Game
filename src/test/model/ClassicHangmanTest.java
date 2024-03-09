@@ -115,20 +115,16 @@ public class ClassicHangmanTest {
 
         @Test
         void testGetHighScore() {
-                // Create some Hangman instances with different scores
                 Hangman hangman1 = new ClassicHangman("Novice");
                 hangman1.setScore(50);
                 Hangman hangman2 = new ClassicHangman("Rookie");
                 hangman2.setScore(100);
                 Hangman hangman3 = new ClassicHangman("Master");
                 hangman3.setScore(75);
-
-                // Add the Hangman instances to the gamesPlayed list in dataHandler
                 testDataHandler.getGamesPlayed().add(hangman1);
                 testDataHandler.getGamesPlayed().add(hangman2);
                 testDataHandler.getGamesPlayed().add(hangman3);
 
-                // Ensure that the highest score is correctly returned
                 assertEquals(100, testDataHandler.getHighScore());
                 }
 
@@ -139,12 +135,10 @@ public class ClassicHangmanTest {
                 Hangman hangman2 = new ClassicHangman("Rookie");
                 Hangman hangman3 = new ClassicHangman("Master");
 
-                // Add the Hangman instances to the gamesPlayed list in testDataHandler
                 testDataHandler.getGamesPlayed().add(hangman1);
                 testDataHandler.getGamesPlayed().add(hangman2);
                 testDataHandler.getGamesPlayed().add(hangman3);
 
-                // Ensure that the gamesPlayed list is returned correctly
                 assertEquals(3, testDataHandler.getGamesPlayed().size());
                 assertTrue(testDataHandler.getGamesPlayed().contains(hangman1));
                 assertTrue(testDataHandler.getGamesPlayed().contains(hangman2));
@@ -153,11 +147,11 @@ public class ClassicHangmanTest {
 
         @Test
                 void testSetFilePath() {
-                // Set a new file path
+                
                 String newPath = "new/path/to/file.json";
                 testDataHandler.setFilePath(newPath);
 
-                // Ensure that the file path is set correctly
+                
                 assertEquals(newPath, testDataHandler.getFilePath());
         }
 }
