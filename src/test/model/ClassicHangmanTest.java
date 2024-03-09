@@ -55,17 +55,18 @@ public class ClassicHangmanTest {
                 testClassicHangmanNovice.setSecretWord("elephant");
                 assertEquals(testClassicHangmanNovice.getSecretWord(), "elephant");
 
-                testClassicHangmanNovice.guessLetter('e');
-                testClassicHangmanNovice.guessLetter('l');
-                testClassicHangmanNovice.guessLetter('p');
-                testClassicHangmanNovice.guessLetter('h');
                 testClassicHangmanNovice.guessLetter('a');
-                testClassicHangmanNovice.guessLetter('n');
-                testClassicHangmanNovice.guessLetter('t');
+                testClassicHangmanNovice.guessLetter('b');
+                testClassicHangmanNovice.guessLetter('c');
+                testClassicHangmanNovice.guessLetter('d');
+                testClassicHangmanNovice.guessLetter('f');
+                testClassicHangmanNovice.guessLetter('g');
+                testClassicHangmanNovice.guessLetter('i');
+                testClassicHangmanNovice.guessLetter('x');
 
 
                 assertTrue(testClassicHangmanNovice.isGameOver());
-
+                assertNull(testClassicHangmanRookie.getResult());
                 testGamesManager.rookieWords = new String[]{"cat"};
                 testGamesManager.noviceWords = new String[]{"elephant"};
                 testGamesManager.masterWords = new String[]{"phenomenon"};

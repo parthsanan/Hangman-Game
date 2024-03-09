@@ -117,4 +117,8 @@ public class DataHandler {
     public void setFilePath(String path) {
         this.filePath = path;
     }
+
+    public String getFilePath() {
+        return this.filePath;
+    }
 }

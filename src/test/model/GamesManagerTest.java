@@ -22,10 +22,9 @@ public class GamesManagerTest {
     }
 
     @Test
-    @DisplayName("Test getMenu() when user chooses Classic mode")
     void testGetMenuClassicMode() {
         inputHandler.setGameMode("Classic");
-        inputHandler.setClassicDifficulty("Novice");
+        inputHandler.setClassicDifficulty("Novice");    
 
         gamesManager.getMenu(inputHandler);
 
@@ -35,7 +34,6 @@ public class GamesManagerTest {
     }
 
     @Test
-    @DisplayName("Test getMenu() when user chooses Variant mode")
     void testGetMenuVariantMode() {
         inputHandler.setGameMode("Variant");
         inputHandler.setVariantMode("Custom");
@@ -48,7 +46,6 @@ public class GamesManagerTest {
     }
 
     @Test
-    @DisplayName("Test getMenu() when user chooses History mode")
     void testGetMenuHistoryMode() {
         inputHandler.setGameMode("History");
 
