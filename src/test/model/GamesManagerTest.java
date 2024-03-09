@@ -1,8 +1,9 @@
 package model;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import persistance.DataHandler;
 
 import java.util.*;
 
@@ -103,5 +104,11 @@ public class GamesManagerTest {
 
         assertEquals(1, gamesManager.getLoadedGames().size());
         assertTrue(gamesManager.getLoadedGames().contains(game));
+
+        Hangman hangman = new ClassicHangman("Rookie");
+        hangman.setSecretWord("apple");
+        gamesManager.addToLoadedGames(hangman);
+        assertTrue(gamesManager.getLoadedGames().contains(hangman));
     }
+
 }

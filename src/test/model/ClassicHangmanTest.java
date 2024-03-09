@@ -3,6 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import persistance.DataHandler;
 import ui.InputHandler;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +15,7 @@ public class ClassicHangmanTest {
         ClassicHangman testClassicHangmanMaster;
         GamesManager testGamesManager;
         InputHandler testInputHandler;
+        DataHandler testDataHandler;
 
         @BeforeEach
         void setupClassicHangmanTest() {
@@ -23,6 +25,7 @@ public class ClassicHangmanTest {
                 testClassicHangmanMaster = new ClassicHangman("Master");
                 testGamesManager = new GamesManager();
                 testInputHandler = new InputHandler(testGamesManager);
+                testDataHandler = new DataHandler();
 
         }
 
@@ -108,5 +111,53 @@ public class ClassicHangmanTest {
                 testClassicHangmanRookie.playGame(testGamesManager);
                 
                 assertTrue(testClassicHangmanRookie.isGameOver());
+        }
+
+        @Test
+        void testGetHighScore() {
+                // Create some Hangman instances with different scores
+                Hangman hangman1 = new ClassicHangman("Novice");
+                hangman1.setScore(50);
+                Hangman hangman2 = new ClassicHangman("Rookie");
+                hangman2.setScore(100);
+                Hangman hangman3 = new ClassicHangman("Master");
+                hangman3.setScore(75);
+
+                // Add the Hangman instances to the gamesPlayed list in dataHandler
+                testDataHandler.getGamesPlayed().add(hangman1);
+                testDataHandler.getGamesPlayed().add(hangman2);
+                testDataHandler.getGamesPlayed().add(hangman3);
+
+                // Ensure that the highest score is correctly returned
+                assertEquals(100, testDataHandler.getHighScore());
+                }
+
+        @Test
+        void testGetGamesPlayed() {
+                // Create some Hangman instances
+                Hangman hangman1 = new ClassicHangman("Novice");
+                Hangman hangman2 = new ClassicHangman("Rookie");
+                Hangman hangman3 = new ClassicHangman("Master");
+
+                // Add the Hangman instances to the gamesPlayed list in testDataHandler
+                testDataHandler.getGamesPlayed().add(hangman1);
+                testDataHandler.getGamesPlayed().add(hangman2);
+                testDataHandler.getGamesPlayed().add(hangman3);
+
+                // Ensure that the gamesPlayed list is returned correctly
+                assertEquals(3, testDataHandler.getGamesPlayed().size());
+                assertTrue(testDataHandler.getGamesPlayed().contains(hangman1));
+                assertTrue(testDataHandler.getGamesPlayed().contains(hangman2));
+                assertTrue(testDataHandler.getGamesPlayed().contains(hangman3));
+                }
+
+        @Test
+                void testSetFilePath() {
+                // Set a new file path
+                String newPath = "new/path/to/file.json";
+                testDataHandler.setFilePath(newPath);
+
+                // Ensure that the file path is set correctly
+                assertEquals(newPath, testDataHandler.getFilePath());
         }
 }
