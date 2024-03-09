@@ -1,5 +1,6 @@
 package model;
 
+// Hangman subclass with Variant mode
 public class VariantHangman extends Hangman {
 
     public VariantHangman(String difficulty) {

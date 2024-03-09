@@ -5,6 +5,7 @@ import ui.InputHandler;
 
 import java.util.ArrayList;
 
+// EFFECTS: Class handling logistics of all games 
 public class GamesManager {
 
     protected ArrayList<Hangman> gamesPlayed;
@@ -42,6 +43,7 @@ public class GamesManager {
         };
     }
 
+    // EFFECTS: prints the menu at the start of the game
     public void getMenu(InputHandler inputHandler) {
 
         String mode = inputHandler.chooseMode();

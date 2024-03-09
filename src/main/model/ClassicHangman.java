@@ -2,6 +2,7 @@ package model;
 
 import ui.InputHandler;
 
+// EFFECTS: Hangman subclass for Classic Mode
 public class ClassicHangman extends Hangman {
 
     public ClassicHangman(String difficulty) {
@@ -11,6 +12,7 @@ public class ClassicHangman extends Hangman {
 
     }
 
+    // EFFECTS: Method overseeing implementation of core logic
     @Override
     public void playGame(GamesManager gamesManager) {
         

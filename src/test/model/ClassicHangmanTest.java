@@ -27,7 +27,7 @@ public class ClassicHangmanTest {
         }
 
         @Test
-        void testPlayGame() {
+        void testPlayGameRookie() {
 
                 testClassicHangmanRookie.setSecretWord("cat");
                 assertEquals(testClassicHangmanRookie.getSecretWord(), "cat");
@@ -42,14 +42,69 @@ public class ClassicHangmanTest {
                 testGamesManager.noviceWords = new String[]{"dog"};
                 testGamesManager.masterWords = new String[]{"elephant"};
 
-                
-                testClassicHangmanRookie.setSecretWord("cat");
-
                 testClassicHangmanRookie.setGuessesLeft(0);
-
                 
                 testClassicHangmanRookie.playGame(testGamesManager);
+                
+                assertTrue(testClassicHangmanRookie.isGameOver());
+        }
 
+        @Test
+        void testPlayGameNovice() {
+
+                testClassicHangmanNovice.setSecretWord("elephant");
+                assertEquals(testClassicHangmanNovice.getSecretWord(), "elephant");
+
+                testClassicHangmanNovice.guessLetter('e');
+                testClassicHangmanNovice.guessLetter('l');
+                testClassicHangmanNovice.guessLetter('p');
+                testClassicHangmanNovice.guessLetter('h');
+                testClassicHangmanNovice.guessLetter('a');
+                testClassicHangmanNovice.guessLetter('n');
+                testClassicHangmanNovice.guessLetter('t');
+
+
+                assertTrue(testClassicHangmanNovice.isGameOver());
+
+                testGamesManager.rookieWords = new String[]{"cat"};
+                testGamesManager.noviceWords = new String[]{"elephant"};
+                testGamesManager.masterWords = new String[]{"phenomenon"};
+
+                testClassicHangmanRookie.setGuessesLeft(0);
+                
+                testClassicHangmanRookie.playGame(testGamesManager);
+                
+                assertTrue(testClassicHangmanRookie.isGameOver());
+        }
+
+        @Test
+        void testPlayGameMaster() {
+
+                testClassicHangmanMaster.setSecretWord("phenomenon");
+                assertEquals(testClassicHangmanMaster.getSecretWord(), "phenomenon");
+
+                testClassicHangmanMaster.guessLetter('p');
+                testClassicHangmanMaster.guessLetter('h');
+                testClassicHangmanMaster.guessLetter('e');
+                testClassicHangmanMaster.guessLetter('n');
+                testClassicHangmanMaster.guessLetter('o');
+                
+                assertFalse(testClassicHangmanMaster.isGameOver());
+
+                testClassicHangmanMaster.guessLetter('m');
+
+                assertTrue(testClassicHangmanMaster.isGameOver());
+
+                testGamesManager.rookieWords = new String[]{"cat"};
+                testGamesManager.noviceWords = new String[]{"dog"};
+                testGamesManager.masterWords = new String[]{"elephant"};
+
+                
+                testClassicHangmanRookie.setSecretWord("ubiquotous");
+
+                testClassicHangmanRookie.setGuessesLeft(0);
+                
+                testClassicHangmanRookie.playGame(testGamesManager);
                 
                 assertTrue(testClassicHangmanRookie.isGameOver());
         }

@@ -22,6 +22,7 @@ public class InputHandler {
         this.dataHandler = new DataHandler();
     }
 
+    // EFFECTS: prints out menu for history option
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void historyMenu(ArrayList<Hangman> loadedGames) {
 

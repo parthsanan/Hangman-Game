@@ -1,11 +1,13 @@
 package ui;
 
+// Class taking care of printing hangman as well as start image
 public class DrawHangman {
 
     public DrawHangman() {
 
     }
 
+    // Prints out start image 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void startImage() {
 

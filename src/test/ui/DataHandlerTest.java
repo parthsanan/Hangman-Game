@@ -1,5 +1,7 @@
 package ui;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,9 +25,34 @@ public class DataHandlerTest {
     }
 
     @Test
-    public void testLoadGames() {
+    public void testLoadGames() throws IOException {
+        // Create a JSON array representing saved games
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObject1 = new JSONObject();
+        jsonObject1.put("result", "Win");
+        jsonObject1.put("mode", "Classic");
+        jsonObject1.put("difficulty", "Novice");
+        jsonObject1.put("secretWord", "test");
+        jsonObject1.put("guessesLeft", 5);
+        jsonObject1.put("score", 50);
+        jsonArray.put(jsonObject1);
+
+        // Write the JSON array to a file
+        String filePath = "src\\test\\ui\\testgames.json";
+        Files.write(Paths.get(filePath), jsonArray.toString().getBytes());
+
+        // Load games from the file
+        dataHandler.loadGames(gamesManager);
+
+        Hangman game = gamesManager.getLoadedGames().get(0);
+        assertEquals("Won", game.getResult());
+        assertEquals("Classic", game.getMode());
+        assertEquals("Novice", game.getDifficulty());
+        assertEquals("penguin", game.getSecretWord());
+        assertEquals(3, game.getGuessesLeft());
+        assertEquals(160, game.getScore());
         // Test loading games from a valid JSON file
-        String filePath = "./src/test/ui/testgames.json";
+            
         String jsonContent = "[{\"result\":\"Win\",\"mode\":\"Classic\",\"difficulty\":\"Novice\",\"secretWord\":\"test\",\"guessesLeft\":5,\"score\":50}]";
         try {
             Files.write(Paths.get(filePath), jsonContent.getBytes());
@@ -70,4 +97,6 @@ public class DataHandlerTest {
             //Succeed
         }
     }
+
+    
 }

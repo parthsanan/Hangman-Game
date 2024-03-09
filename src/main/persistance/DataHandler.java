@@ -67,7 +67,7 @@ public class DataHandler {
         System.out.println(manager.getLoadedGames().size() + " Games Loaded!" + "\n");
     }
 
-    // Save list of games to file
+    // Save singular game to file
     public void saveGame(Hangman game) {
         JSONArray jsonArray;
         

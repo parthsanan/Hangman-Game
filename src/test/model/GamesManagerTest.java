@@ -1,6 +1,7 @@
 package model;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -18,6 +19,46 @@ public class GamesManagerTest {
     public void setUp() {
         gamesManager = new GamesManager();
         inputHandler = new InputHandler(gamesManager);
+    }
+
+    @Test
+    @DisplayName("Test getMenu() when user chooses Classic mode")
+    void testGetMenuClassicMode() {
+        inputHandler.setGameMode("Classic");
+        inputHandler.setClassicDifficulty("Novice");
+
+        gamesManager.getMenu(inputHandler);
+
+        assertNotNull(gamesManager.currentGame);
+        assertTrue(gamesManager.currentGame instanceof ClassicHangman);
+        assertEquals("Novice", gamesManager.currentGame.getDifficulty());
+    }
+
+    @Test
+    @DisplayName("Test getMenu() when user chooses Variant mode")
+    void testGetMenuVariantMode() {
+        inputHandler.setGameMode("Variant");
+        inputHandler.setVariantMode("Custom");
+
+        gamesManager.getMenu(inputHandler);
+
+        assertNotNull(gamesManager.currentGame);
+        assertTrue(gamesManager.currentGame instanceof VariantHangman);
+        assertEquals("Custom", gamesManager.currentGame.getMode());
+    }
+
+    @Test
+    @DisplayName("Test getMenu() when user chooses History mode")
+    void testGetMenuHistoryMode() {
+        inputHandler.setGameMode("History");
+
+        ArrayList<Hangman> loadedGames = new ArrayList<>();
+        loadedGames.add(new ClassicHangman("Novice"));
+        gamesManager.setLoadedGames(loadedGames);
+
+        gamesManager.getMenu(inputHandler);
+
+        assertNull(gamesManager.currentGame);
     }
 
     @Test
