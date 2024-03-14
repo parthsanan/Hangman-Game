@@ -14,5 +14,7 @@ public class Main {
         drawer.startImage();
         manager.getMenu(inputHandler);
 
+
+
     }
 }

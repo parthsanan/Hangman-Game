@@ -25,30 +25,6 @@ public class DataHandlerTest {
     }
 
     @Test
-    void testLoadGames() {
-        // Prepare a mock JSON content
-        String mockJsonContent = "[{\"result\":\"win\",\"mode\":\"Classic\",\"difficulty\":\"Novice\"," +
-                "\"secretWord\":\"apple\",\"guessesLeft\":5,\"score\":50}]";
-
-        try {
-            Files.write(Paths.get(dataHandler.getFilePath()), mockJsonContent.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        dataHandler.loadGames(gamesManager);
-
-        assertEquals(1, gamesManager.loadedGames.size());
-        Hangman loadedGame = gamesManager.loadedGames.get(0);
-        assertEquals("win", loadedGame.getResult());
-        assertEquals("Classic", loadedGame.getMode());
-        assertEquals("Novice", loadedGame.getDifficulty());
-        assertEquals("apple", loadedGame.getSecretWord());
-        assertEquals(5, loadedGame.getGuessesLeft());
-        assertEquals(50, loadedGame.getScore());
-    }
-
-    @Test
     void testSaveGame() {
         // Create a mock game
         Hangman game = new ClassicHangman("Novice");
@@ -76,6 +52,30 @@ public class DataHandlerTest {
         assertTrue(savedJsonContent.contains("\"secretWord\":\"apple\""));
         assertTrue(savedJsonContent.contains("\"guessesLeft\":5"));
         assertTrue(savedJsonContent.contains("\"score\":50"));
+    }
+
+    @Test
+    void testLoadGames() {
+        
+        String mockJsonContent = "[{\"result\":\"win\",\"mode\":\"Classic\",\"difficulty\":\"Novice\"," +
+                "\"secretWord\":\"apple\",\"guessesLeft\":5,\"score\":50}]";
+
+        try {
+            Files.write(Paths.get(dataHandler.getFilePath()), mockJsonContent.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        dataHandler.loadGames(gamesManager);
+
+        assertEquals(1, gamesManager.loadedGames.size());
+        Hangman loadedGame = gamesManager.loadedGames.get(0);
+        assertEquals("win", loadedGame.getResult());
+        assertEquals("Classic", loadedGame.getMode());
+        assertEquals("Novice", loadedGame.getDifficulty());
+        assertEquals("apple", loadedGame.getSecretWord());
+        assertEquals(5, loadedGame.getGuessesLeft());
+        assertEquals(50, loadedGame.getScore());
     }
 
     private static class GamesManagerStub extends GamesManager {

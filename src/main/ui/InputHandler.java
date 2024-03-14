@@ -91,7 +91,7 @@ public class InputHandler {
 
         System.out.println("Word: " + game.getVisibleWord());
         System.out.print("Enter a letter: ");
-        String strLetter = input.nextLine();
+        String strLetter = input.next();
 
         while (true) {
 
