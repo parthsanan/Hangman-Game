@@ -3,7 +3,6 @@ package persistance;
 import model.ClassicHangman;
 import model.GamesManager;
 import model.Hangman;
-import model.VariantHangman;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -44,12 +43,7 @@ public class DataHandler {
                 Integer score = jsonObject.getInt("score");
                 Hangman game = null;
 
-                if (mode.equals("Classic")) {
-                    game = new ClassicHangman(difficulty);
-
-                } else if (mode.equals("Variant")) {
-                    game = new VariantHangman(difficulty);
-                }
+                game = new ClassicHangman(difficulty, manager);
                 
                 game.setResult(result);
                 game.setMode(mode);

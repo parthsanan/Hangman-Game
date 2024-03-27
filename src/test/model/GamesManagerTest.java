@@ -2,10 +2,9 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.*;
-
 import ui.InputHandler;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,39 +20,12 @@ public class GamesManagerTest {
     }
 
     @Test
-    public void testGetMenu() {
-        
-        inputHandler.setGameMode("Classic");
-        inputHandler.setClassicDifficulty("Novice");
-
-        gamesManager.getMenu(inputHandler);
-
-        assertNotNull(gamesManager.currentGame);
-        assertTrue(gamesManager.currentGame instanceof ClassicHangman);
-        
-        inputHandler.setGameMode("Variant");
-        inputHandler.setVariantMode("Mastermind");
-
-        gamesManager.getMenu(inputHandler);
-
-        assertNotNull(gamesManager.currentGame);  
-        assertTrue(gamesManager.currentGame instanceof VariantHangman);
-
-        inputHandler.setGameMode("History");
-
-        gamesManager.getMenu(inputHandler);
-        assertNull(gamesManager.currentGame);          
-
-        assertEquals(gamesManager.loadedGames, gamesManager.getLoadedGames());
-    }
-
-    @Test
     public void testGetLoadedGames() {
         assertNotNull(gamesManager.getLoadedGames());
         assertTrue(gamesManager.getLoadedGames().isEmpty());
 
         ArrayList<Hangman> loadedGames = new ArrayList<>();
-        loadedGames.add(new ClassicHangman("Novice"));
+        loadedGames.add(new ClassicHangman("Novice", gamesManager));
 
         gamesManager.setLoadedGames(loadedGames);
 
@@ -62,14 +34,14 @@ public class GamesManagerTest {
 
     @Test
     public void testAddToLoadedGames() {
-        Hangman game = new ClassicHangman("Novice");
+        Hangman game = new ClassicHangman("Novice", gamesManager);
 
         gamesManager.addToLoadedGames(game);
 
         assertEquals(1, gamesManager.getLoadedGames().size());
         assertTrue(gamesManager.getLoadedGames().contains(game));
 
-        Hangman hangman = new ClassicHangman("Rookie");
+        Hangman hangman = new ClassicHangman("Rookie", gamesManager);
         hangman.setSecretWord("apple");
         gamesManager.addToLoadedGames(hangman);
         assertTrue(gamesManager.getLoadedGames().contains(hangman));

@@ -19,13 +19,14 @@ public class ClassicHangmanTest {
 
         @BeforeEach
         void setupClassicHangmanTest() {
-                
-                testClassicHangmanRookie = new ClassicHangman("Rookie");
-                testClassicHangmanNovice = new ClassicHangman("Novice");
-                testClassicHangmanMaster = new ClassicHangman("Master");
+
                 testGamesManager = new GamesManager();
                 testInputHandler = new InputHandler(testGamesManager);
                 testDataHandler = new DataHandler();
+
+                testClassicHangmanRookie = new ClassicHangman("Rookie", testGamesManager);
+                testClassicHangmanNovice = new ClassicHangman("Novice", testGamesManager);
+                testClassicHangmanMaster = new ClassicHangman("Master", testGamesManager);
 
         }
 
@@ -46,8 +47,6 @@ public class ClassicHangmanTest {
                 testGamesManager.masterWords = new String[]{"elephant"};
 
                 testClassicHangmanRookie.setGuessesLeft(0);
-                
-                testClassicHangmanRookie.playGame(testGamesManager);
                 
                 assertTrue(testClassicHangmanRookie.isGameOver());
         }
@@ -75,8 +74,6 @@ public class ClassicHangmanTest {
                 testGamesManager.masterWords = new String[]{"phenomenon"};
 
                 testClassicHangmanRookie.setGuessesLeft(0);
-                
-                testClassicHangmanRookie.playGame(testGamesManager);
                 
                 assertTrue(testClassicHangmanRookie.isGameOver());
         }
@@ -108,18 +105,16 @@ public class ClassicHangmanTest {
 
                 testClassicHangmanRookie.setGuessesLeft(0);
                 
-                testClassicHangmanRookie.playGame(testGamesManager);
-                
                 assertTrue(testClassicHangmanRookie.isGameOver());
         }
 
         @Test
         void testGetHighScore() {
-                Hangman hangman1 = new ClassicHangman("Novice");
+                Hangman hangman1 = new ClassicHangman("Novice", testGamesManager);
                 hangman1.setScore(50);
-                Hangman hangman2 = new ClassicHangman("Rookie");
+                Hangman hangman2 = new ClassicHangman("Rookie", testGamesManager);
                 hangman2.setScore(100);
-                Hangman hangman3 = new ClassicHangman("Master");
+                Hangman hangman3 = new ClassicHangman("Master", testGamesManager);
                 hangman3.setScore(75);
                 testDataHandler.getGamesPlayed().add(hangman1);
                 testDataHandler.getGamesPlayed().add(hangman2);
@@ -131,9 +126,9 @@ public class ClassicHangmanTest {
         @Test
         void testGetGamesPlayed() {
                 // Create some Hangman instances
-                Hangman hangman1 = new ClassicHangman("Novice");
-                Hangman hangman2 = new ClassicHangman("Rookie");
-                Hangman hangman3 = new ClassicHangman("Master");
+                Hangman hangman1 = new ClassicHangman("Novice", testGamesManager);
+                Hangman hangman2 = new ClassicHangman("Rookie", testGamesManager);
+                Hangman hangman3 = new ClassicHangman("Master", testGamesManager);
 
                 testDataHandler.getGamesPlayed().add(hangman1);
                 testDataHandler.getGamesPlayed().add(hangman2);

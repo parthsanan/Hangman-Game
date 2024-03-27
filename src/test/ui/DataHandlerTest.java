@@ -1,17 +1,18 @@
 package ui;
 
+import model.ClassicHangman;
+import model.GamesManager;
+import model.Hangman;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import persistance.DataHandler;
 
-import model.*;
-import persistance.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-import java.io.IOException; 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DataHandlerTest {
 
@@ -27,7 +28,7 @@ public class DataHandlerTest {
     @Test
     void testSaveGame() {
         // Create a mock game
-        Hangman game = new ClassicHangman("Novice");
+        Hangman game = new ClassicHangman("Novice", gamesManager);
         game.setResult("win");
         game.setSecretWord("apple");
         game.setGuessesLeft(5);

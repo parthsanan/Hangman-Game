@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class InputHandler {
 
     private String gameMode;
-    private String variantMode;
     private String classicDifficulty;
     private static Scanner input = new Scanner(System.in);
     private DataHandler dataHandler;
@@ -70,7 +69,7 @@ public class InputHandler {
                 break;
 
             case "3":
-                manager.getMenu(this);
+                menu();
                 break;
 
             case "4":
@@ -87,7 +86,7 @@ public class InputHandler {
     }
 
     // EFFECTS: Passes user input guess to check if correct
-    public void getGuess(ClassicHangman game) {
+    public void getGuess(Hangman game) {
 
         System.out.println("Word: " + game.getVisibleWord());
         System.out.print("Enter a letter: ");
@@ -114,7 +113,7 @@ public class InputHandler {
 
     // EFFECTS: Check if game is over
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    public void gameResult(ClassicHangman game) {
+    public void gameResult(Hangman game) {
 
         if (game.getVisibleWord().equals(game.getSecretWord())) {
 
@@ -152,51 +151,64 @@ public class InputHandler {
                 break;
         }
 
-        manager.getMenu(this);
+        menu();
     }
 
     // REQUIRES: choice is int
     // MODIFIES: gameMode
     // EFFECTS: sets game mode basis user input.
-    public String chooseMode() {
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    public void menu() {
 
         System.out.println("Game Mode:" + "\n");
         System.out.println("1. Classic" + "\n");
-        System.out.println("2. Variant" + "\n");
-        System.out.println("3. History" + "\n");
-        System.out.println("4. Quit" + "\n");
+        System.out.println("2. History" + "\n");
+        System.out.println("3. Quit" + "\n");
         System.out.print("-> ");
 
         int choice = input.nextInt();
 
-        if (choice == 1) {
+        while (true) {
 
-            setGameMode("Classic");
+            if (choice == 1) {
 
-        } else if (choice == 2) {
+                setGameMode("Classic");
 
-            setGameMode("Variant");
+                Hangman currentGame = new ClassicHangman(chooseClassicDifficulty(), manager);
 
-        } else if (choice == 3) {
+                while (!currentGame.isGameOver()) {
 
-            setGameMode("History");
+                    getGuess(currentGame);
 
-        } else if (choice == 4) {
+                }
 
-            System.out.println();
-            System.out.println("Bye!");
-            System.exit(0);
+                gameResult(currentGame);
 
-        } else {
+                break;
 
-            input.nextLine();
-            System.out.println("Invalid Input!");
+            } else if (choice == 2) {
+
+                setGameMode("History");
+                historyMenu(manager.getLoadedGames());
+                break;
+
+            } else if (choice == 3) {
+
+                System.out.println();
+                System.out.println("Bye!");
+                System.exit(0);
+
+            } else {
+
+                input.nextLine();
+                System.out.println("Invalid Input!" + "\n");
+                menu();
+
+            }
 
         }
 
         System.out.println("You chose: " + getGameMode() + "\n");
-
-        return getGameMode();
 
     }
 
@@ -231,32 +243,6 @@ public class InputHandler {
 
     }
 
-    // MODIFIES: variantMode
-    // EFFECTS: sets variant mode basis user input.
-    public String chooseVariantMode() {
-
-        System.out.println("Choose Variant:" + "\n");
-        System.out.println("1. Timed" + "\n");
-        System.out.println("2. Survival" + "\n");
-        System.out.print("-> ");
-
-        int choice = input.nextInt();
-
-        if (choice == 1) {
-
-            setVariantMode("Timed");
-
-        } else if (choice == 2) {
-
-            setVariantMode("Survival");
-
-        }
-
-        System.out.println("You chose: " + getVariantMode() + "\n");
-
-        return getVariantMode();
-    }
-
     public void setGameMode(String gameMode) {
         this.gameMode = gameMode;
     }
@@ -271,13 +257,5 @@ public class InputHandler {
 
     public void setClassicDifficulty(String classicDifficulty) {
         this.classicDifficulty = classicDifficulty;
-    }
-
-    public String getVariantMode() {
-        return variantMode;
-    }
-
-    public void setVariantMode(String variantMode) {
-        this.variantMode = variantMode;
     }
 }

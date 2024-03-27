@@ -2,17 +2,21 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HangmanTest {
 
     private Hangman hangman;
+    private GamesManager manager;
 
     @BeforeEach
     public void setUp() {
-        hangman = new ClassicHangman("Rookie");
+        manager = new GamesManager();
+        hangman = new ClassicHangman("Rookie", manager);
     }
 
     @Test
@@ -40,7 +44,7 @@ public class HangmanTest {
     @Test
     public void testChooseSecretWord() {
         String[] words = {"test", "hello", "world"};
-        hangman.chooseSecretWord(words);
+        String secretWord = hangman.chooseSecretWord(manager, hangman.getDifficulty());
         assertNotNull(hangman.getSecretWord());
         assertTrue(hangman.getSecretWord().length() > 0);
     }

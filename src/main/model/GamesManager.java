@@ -1,14 +1,12 @@
 package model;
 
 import persistance.DataHandler;
-import ui.InputHandler;
 
 import java.util.ArrayList;
 
 // EFFECTS: Class handling logistics of all games 
 public class GamesManager {
 
-    protected ArrayList<Hangman> gamesPlayed;
     protected DataHandler dataHandler;
     protected Hangman currentGame;    
     ArrayList<Hangman> loadedGames;
@@ -43,35 +41,6 @@ public class GamesManager {
         };
     }
 
-    // EFFECTS: prints the menu at the start of the game
-    public void getMenu(InputHandler inputHandler) {
-
-        String mode = inputHandler.chooseMode();
-
-        if (mode.equals("Classic") || mode.equals("Variant")) {
-
-            switch (mode) {
-
-                case "Classic":
-                    currentGame = new ClassicHangman(inputHandler.chooseClassicDifficulty());
-                    break;
-
-                case "Variant":
-                    currentGame = new VariantHangman(inputHandler.chooseVariantMode());
-                    break;
-
-            }
-
-            currentGame.playGame(this);
-
-        } else if (mode.equals("History")) {
-
-            inputHandler.historyMenu(loadedGames);
-
-        }
-
-    }
-
     public ArrayList<Hangman> getLoadedGames() {
         return this.loadedGames;
     }
@@ -82,5 +51,17 @@ public class GamesManager {
 
     public void setLoadedGames(ArrayList<Hangman> games) {
         this.loadedGames = games;
+    }
+
+    public String[] getRookieWords() {
+        return rookieWords;
+    }
+
+    public String[] getNoviceWords() {
+        return noviceWords;
+    }
+
+    public String[] getMasterWords() {
+        return masterWords;
     }
 }

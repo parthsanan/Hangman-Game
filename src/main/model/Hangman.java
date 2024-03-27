@@ -1,10 +1,10 @@
 package model;
 
+import ui.DrawHangman;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import ui.DrawHangman;
 
 public abstract class Hangman {
 
@@ -17,16 +17,15 @@ public abstract class Hangman {
     private int score;
     private List<Character> guessedLetters;
 
-    public Hangman(String difficulty) {
+    public Hangman(String difficulty, GamesManager manager) {
 
         this.difficulty = difficulty;   
         this.guessesLeft = 7;
         this.score = 0;
         this.guessedLetters = new ArrayList<Character>();
+        this.secretWord = chooseSecretWord(manager, getDifficulty());
 
     }
-
-    public abstract void playGame(GamesManager manager);
 
     // EFFECTS: Check if secret word contains letter entered by user
     public void guessLetter(char letter) {
@@ -97,11 +96,29 @@ public abstract class Hangman {
 
     // REQUIRES: array.length > 0
     // EFFECTS: Choose random word from array
-    public void chooseSecretWord(String[] array) {
+    public String chooseSecretWord(GamesManager manager, String difficulty) {
+
+        String[] array = new String[]{};
+
+        switch (getDifficulty()) {
+            case "Master":
+                array = manager.getMasterWords();
+                break;
+
+            case "Novice":
+                array = manager.getNoviceWords();
+                break;
+
+            case "Rookie":
+                array = manager.getRookieWords();
+                break;
+        }
 
         Random generator = new Random();
 
         setSecretWord(array[generator.nextInt(array.length)]);
+
+        return getSecretWord();
 
     }
 

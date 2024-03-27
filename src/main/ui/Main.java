@@ -12,9 +12,7 @@ public class Main {
         InputHandler inputHandler = new InputHandler(manager);
 
         drawer.startImage();
-        manager.getMenu(inputHandler);
-
-
+        inputHandler.menu();
 
     }
 }
