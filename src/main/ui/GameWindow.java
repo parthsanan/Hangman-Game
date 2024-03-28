@@ -1,16 +1,13 @@
 package ui;
 
+import exceptions.GuessedLetterException;
+import model.ClassicHangman;
+import model.GamesManager;
+import model.Hangman;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
-import Exceptions.GuessedLetterException;
-import model.*;
 
 public class GameWindow extends JFrame implements ActionListener {
 
@@ -32,6 +29,7 @@ public class GameWindow extends JFrame implements ActionListener {
         initializeFields();
     }
 
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     @Override
     public void actionPerformed(ActionEvent e) {
 

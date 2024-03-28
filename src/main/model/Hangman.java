@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import Exceptions.GuessedLetterException;
+import exceptions.GuessedLetterException;
 
 public abstract class Hangman {
 

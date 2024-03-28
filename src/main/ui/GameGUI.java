@@ -28,6 +28,7 @@ public class GameGUI extends JFrame implements ActionListener {
         initializeTabs(mainPanel, historyPanel, tabbedPane);
     }
 
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     @Override
     public void actionPerformed(ActionEvent e) {
 
