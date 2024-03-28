@@ -4,24 +4,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import persistance.DataHandler;
-import ui.InputHandler;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ClassicHangmanTest {
-        
+
         ClassicHangman testClassicHangmanRookie;
         ClassicHangman testClassicHangmanNovice;
         ClassicHangman testClassicHangmanMaster;
         GamesManager testGamesManager;
-        InputHandler testInputHandler;
         DataHandler testDataHandler;
 
         @BeforeEach
         void setupClassicHangmanTest() {
 
                 testGamesManager = new GamesManager();
-                testInputHandler = new InputHandler(testGamesManager);
                 testDataHandler = new DataHandler();
 
                 testClassicHangmanRookie = new ClassicHangman("Rookie", testGamesManager);
@@ -36,18 +33,29 @@ public class ClassicHangmanTest {
                 testClassicHangmanRookie.setSecretWord("cat");
                 assertEquals(testClassicHangmanRookie.getSecretWord(), "cat");
 
-                testClassicHangmanRookie.guessLetter('c');
-                testClassicHangmanRookie.guessLetter('a');
-                testClassicHangmanRookie.guessLetter('t');
+                try {
+                        testClassicHangmanRookie.checkGuessedLetter('c');
+                        testClassicHangmanRookie.checkGuessedLetter('a');
+                        testClassicHangmanRookie.checkGuessedLetter('t');
+                } catch (Exception e) {
+                        fail("Exception should not have been thrown");
+                }
+
+                try {
+                        testClassicHangmanRookie.checkGuessedLetter('t');
+                        fail("Exception should have been thrown");
+                } catch (Exception e) {
+                        // expected
+                }
 
                 assertTrue(testClassicHangmanRookie.isGameOver());
 
-                testGamesManager.rookieWords = new String[]{"cat"};
-                testGamesManager.noviceWords = new String[]{"dog"};
-                testGamesManager.masterWords = new String[]{"elephant"};
+                testGamesManager.rookieWords = new String[] { "cat" };
+                testGamesManager.noviceWords = new String[] { "dog" };
+                testGamesManager.masterWords = new String[] { "elephant" };
 
                 testClassicHangmanRookie.setGuessesLeft(0);
-                
+
                 assertTrue(testClassicHangmanRookie.isGameOver());
         }
 
@@ -57,24 +65,27 @@ public class ClassicHangmanTest {
                 testClassicHangmanNovice.setSecretWord("elephant");
                 assertEquals(testClassicHangmanNovice.getSecretWord(), "elephant");
 
-                testClassicHangmanNovice.guessLetter('a');
-                testClassicHangmanNovice.guessLetter('b');
-                testClassicHangmanNovice.guessLetter('c');
-                testClassicHangmanNovice.guessLetter('d');
-                testClassicHangmanNovice.guessLetter('f');
-                testClassicHangmanNovice.guessLetter('g');
-                testClassicHangmanNovice.guessLetter('i');
-                testClassicHangmanNovice.guessLetter('x');
-
+                try {
+                        testClassicHangmanNovice.checkGuessedLetter('a');
+                        testClassicHangmanNovice.checkGuessedLetter('b');
+                        testClassicHangmanNovice.checkGuessedLetter('c');
+                        testClassicHangmanNovice.checkGuessedLetter('d');
+                        testClassicHangmanNovice.checkGuessedLetter('f');
+                        testClassicHangmanNovice.checkGuessedLetter('g');
+                        testClassicHangmanNovice.checkGuessedLetter('i');
+                        testClassicHangmanNovice.checkGuessedLetter('x');
+                } catch (Exception e) {
+                        fail("Exception should not have been thrown");
+                }
 
                 assertTrue(testClassicHangmanNovice.isGameOver());
                 assertNull(testClassicHangmanRookie.getResult());
-                testGamesManager.rookieWords = new String[]{"cat"};
-                testGamesManager.noviceWords = new String[]{"elephant"};
-                testGamesManager.masterWords = new String[]{"phenomenon"};
+                testGamesManager.rookieWords = new String[] { "cat" };
+                testGamesManager.noviceWords = new String[] { "elephant" };
+                testGamesManager.masterWords = new String[] { "phenomenon" };
 
                 testClassicHangmanRookie.setGuessesLeft(0);
-                
+
                 assertTrue(testClassicHangmanRookie.isGameOver());
         }
 
@@ -84,27 +95,34 @@ public class ClassicHangmanTest {
                 testClassicHangmanMaster.setSecretWord("phenomenon");
                 assertEquals(testClassicHangmanMaster.getSecretWord(), "phenomenon");
 
-                testClassicHangmanMaster.guessLetter('p');
-                testClassicHangmanMaster.guessLetter('h');
-                testClassicHangmanMaster.guessLetter('e');
-                testClassicHangmanMaster.guessLetter('n');
-                testClassicHangmanMaster.guessLetter('o');
-                
+                try {
+                        testClassicHangmanMaster.checkGuessedLetter('p');
+                        testClassicHangmanMaster.checkGuessedLetter('h');
+                        testClassicHangmanMaster.checkGuessedLetter('e');
+                        testClassicHangmanMaster.checkGuessedLetter('n');
+                        testClassicHangmanMaster.checkGuessedLetter('o');
+                } catch (Exception e) {
+                        fail("Exception should not have been thrown");
+                }
+
                 assertFalse(testClassicHangmanMaster.isGameOver());
 
-                testClassicHangmanMaster.guessLetter('m');
+                try {
+                        testClassicHangmanMaster.checkGuessedLetter('m');
+                } catch (Exception e) {
+                        fail("Exception should not have been thrown");
+                }
 
                 assertTrue(testClassicHangmanMaster.isGameOver());
 
-                testGamesManager.rookieWords = new String[]{"cat"};
-                testGamesManager.noviceWords = new String[]{"dog"};
-                testGamesManager.masterWords = new String[]{"elephant"};
+                testGamesManager.rookieWords = new String[] { "cat" };
+                testGamesManager.noviceWords = new String[] { "dog" };
+                testGamesManager.masterWords = new String[] { "elephant" };
 
-                
                 testClassicHangmanRookie.setSecretWord("ubiquotous");
 
                 testClassicHangmanRookie.setGuessesLeft(0);
-                
+
                 assertTrue(testClassicHangmanRookie.isGameOver());
         }
 
@@ -121,7 +139,7 @@ public class ClassicHangmanTest {
                 testDataHandler.getGamesPlayed().add(hangman3);
 
                 assertEquals(100, testDataHandler.getHighScore());
-                }
+        }
 
         @Test
         void testGetGamesPlayed() {
@@ -138,15 +156,14 @@ public class ClassicHangmanTest {
                 assertTrue(testDataHandler.getGamesPlayed().contains(hangman1));
                 assertTrue(testDataHandler.getGamesPlayed().contains(hangman2));
                 assertTrue(testDataHandler.getGamesPlayed().contains(hangman3));
-                }
+        }
 
         @Test
-                void testSetFilePath() {
-                
+        void testSetFilePath() {
+
                 String newPath = "new/path/to/file.json";
                 testDataHandler.setFilePath(newPath);
 
-                
                 assertEquals(newPath, testDataHandler.getFilePath());
         }
 }

@@ -2,7 +2,6 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ui.InputHandler;
 
 import java.util.ArrayList;
 
@@ -11,12 +10,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GamesManagerTest {
 
     private GamesManager gamesManager;
-    private InputHandler inputHandler;
 
     @BeforeEach
     public void setUp() {
         gamesManager = new GamesManager();
-        inputHandler = new InputHandler(gamesManager);
     }
 
     @Test

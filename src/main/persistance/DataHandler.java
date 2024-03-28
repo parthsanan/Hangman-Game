@@ -24,11 +24,11 @@ public class DataHandler {
     }
 
     // EFFECTS: Load existing games from file
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
     public void loadGames(GamesManager manager) {
 
         manager.setLoadedGames(new ArrayList<Hangman>());
-        
+
         try {
             String content = new String(Files.readAllBytes(Paths.get(filePath)));
             JSONArray jsonArray = new JSONArray(content);
@@ -36,7 +36,6 @@ public class DataHandler {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String result = jsonObject.getString("result");
-                String mode = jsonObject.getString("mode");
                 String difficulty = jsonObject.getString("difficulty");
                 String secretWord = jsonObject.getString("secretWord");
                 Integer guessesLeft = jsonObject.getInt("guessesLeft");
@@ -44,27 +43,24 @@ public class DataHandler {
                 Hangman game = null;
 
                 game = new ClassicHangman(difficulty, manager);
-                
+
                 game.setResult(result);
-                game.setMode(mode);
                 game.setSecretWord(secretWord);
                 game.setScore(score);
                 game.setGuessesLeft(guessesLeft);
-                
+
                 manager.addToLoadedGames(game);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        System.out.println(manager.getLoadedGames().size() + " Games Loaded!" + "\n");
     }
 
     // Save singular game to file
     public void saveGame(Hangman game) {
         JSONArray jsonArray;
-        
+
         try {
             String content = new String(Files.readAllBytes(Paths.get(filePath)));
             jsonArray = new JSONArray(content);
@@ -74,7 +70,6 @@ public class DataHandler {
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("result", game.getResult());
-        jsonObject.put("mode", game.getMode());
         jsonObject.put("difficulty", game.getDifficulty());
         jsonObject.put("secretWord", game.getSecretWord());
         jsonObject.put("guessesLeft", game.getGuessesLeft());

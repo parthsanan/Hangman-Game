@@ -64,4 +64,8 @@ public class GamesManager {
     public String[] getMasterWords() {
         return masterWords;
     }
+
+    public DataHandler getDataHandler() {
+        return this.dataHandler;
+    }
 }

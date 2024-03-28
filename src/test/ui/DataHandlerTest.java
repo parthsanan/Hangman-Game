@@ -57,7 +57,7 @@ public class DataHandlerTest {
 
     @Test
     void testLoadGames() {
-        
+
         String mockJsonContent = "[{\"result\":\"win\",\"mode\":\"Classic\",\"difficulty\":\"Novice\"," +
                 "\"secretWord\":\"apple\",\"guessesLeft\":5,\"score\":50}]";
 
@@ -72,7 +72,6 @@ public class DataHandlerTest {
         assertEquals(1, gamesManager.loadedGames.size());
         Hangman loadedGame = gamesManager.loadedGames.get(0);
         assertEquals("win", loadedGame.getResult());
-        assertEquals("Classic", loadedGame.getMode());
         assertEquals("Novice", loadedGame.getDifficulty());
         assertEquals("apple", loadedGame.getSecretWord());
         assertEquals(5, loadedGame.getGuessesLeft());
@@ -89,4 +88,3 @@ public class DataHandlerTest {
         }
     }
 }
-

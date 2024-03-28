@@ -1,14 +1,13 @@
 package model;
 
-import ui.DrawHangman;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import Exceptions.GuessedLetterException;
+
 public abstract class Hangman {
 
-    private String mode;
     private String result;
     private String difficulty;
     private String secretWord;
@@ -19,54 +18,11 @@ public abstract class Hangman {
 
     public Hangman(String difficulty, GamesManager manager) {
 
-        this.difficulty = difficulty;   
+        this.difficulty = difficulty;
         this.guessesLeft = 7;
         this.score = 0;
         this.guessedLetters = new ArrayList<Character>();
         this.secretWord = chooseSecretWord(manager, getDifficulty());
-
-    }
-
-    // EFFECTS: Check if secret word contains letter entered by user
-    public void guessLetter(char letter) {
-
-        DrawHangman drawer = new DrawHangman();
-
-        letter = Character.toLowerCase(letter);
-
-        if (getGuessedLetters().contains(letter)) {
-
-            System.out.println("\n" + "You've already guessed that letter.");
-
-        } else {
-
-            getGuessedLetters().add(letter);
-
-            if (secretWord.contains(Character.toString(letter))) {
-
-                setScore(getScore() + 10);
-
-                System.out.println("\n" + "Correct guess!");
-
-            } else {
-
-                setGuessesLeft(getGuessesLeft() - 1);
-
-                System.out.println("\n" + "Incorrect guess!");
-
-            }
-
-        }
-
-        System.out.println("");
-
-        drawer.drawFigure(getGuessesLeft());
-
-        System.out.println("Attempts left: " + getGuessesLeft());
-        System.out.println("Score: " + getScore());
-        System.out.println("");
-
-        isGameOver();
 
     }
 
@@ -98,7 +54,7 @@ public abstract class Hangman {
     // EFFECTS: Choose random word from array
     public String chooseSecretWord(GamesManager manager, String difficulty) {
 
-        String[] array = new String[]{};
+        String[] array = new String[] {};
 
         switch (getDifficulty()) {
             case "Master":
@@ -128,6 +84,51 @@ public abstract class Hangman {
 
         return guessesLeft <= 0 || getVisibleWord().equals(secretWord);
 
+    }
+
+    public boolean isGameWon() {
+
+        return getVisibleWord().equals(secretWord);
+
+    }
+
+    // EFFECTS: Check if secret word contains letter entered by user
+    public boolean checkGuessedLetter(char letter) throws GuessedLetterException {
+
+        letter = Character.toLowerCase(letter);
+
+        if (getGuessedLetters().contains(letter)) {
+
+            throw new GuessedLetterException();
+
+        } else {
+
+            getGuessedLetters().add(letter);
+
+            if (secretWord.contains(Character.toString(letter))) {
+
+                setScore(getScore() + 10);
+
+                return true;
+
+            } else {
+
+                setGuessesLeft(getGuessesLeft() - 1);
+
+            }
+
+        }
+
+        return false;
+
+    }
+
+    @Override
+    public String toString() {
+        return "Difficulty: " + getDifficulty() + "\n"
+                + "Secret Word: " + getSecretWord() + "\n"
+                + "Guesses Left: " + getGuessesLeft() + "\n"
+                + "Score: " + getScore() + "\n";
     }
 
     public String getDifficulty() {
@@ -164,14 +165,6 @@ public abstract class Hangman {
 
     public void setScore(int score) {
         this.score = score;
-    }
-
-    public void setMode(String mode) {
-        this.mode = mode;
-    }
-
-    public String getMode() {
-        return this.mode;
     }
 
     public void setResult(String result) {

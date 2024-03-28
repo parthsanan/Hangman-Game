@@ -21,14 +21,22 @@ public class HangmanTest {
 
     @Test
     public void testGuessLetter() {
-        assertEquals(hangman.getMode(), "Classic");
         assertEquals(hangman.getDifficulty(), "Rookie");
         hangman.setSecretWord("test");
-        hangman.guessLetter('t');
+        try {
+            hangman.checkGuessedLetter('t');
+        } catch (Exception e) {
+            fail("Exception should not have been thrown");
+        }
+
         assertEquals(10, hangman.getScore());
         assertEquals(7, hangman.getGuessesLeft());
         assertTrue(hangman.getVisibleWord().contains("t"));
-        hangman.guessLetter('x');
+        try {
+            hangman.checkGuessedLetter('x');
+        } catch (Exception e) {
+            fail("Exception should not have been thrown");
+        }
         assertEquals(6, hangman.getGuessesLeft());
         assertFalse(hangman.getVisibleWord().contains("x"));
     }
@@ -37,24 +45,30 @@ public class HangmanTest {
     public void testGetVisibleWord() {
         hangman.setSecretWord("test");
         assertEquals("____", hangman.getVisibleWord());
-        hangman.guessLetter('t');
+        try {
+            hangman.checkGuessedLetter('t');
+        } catch (Exception e) {
+            fail("Exception should not have been thrown");
+        }
         assertEquals("t__t", hangman.getVisibleWord());
     }
 
     @Test
     public void testChooseSecretWord() {
-        String[] words = {"test", "hello", "world"};
-        String secretWord = hangman.chooseSecretWord(manager, hangman.getDifficulty());
         assertNotNull(hangman.getSecretWord());
         assertTrue(hangman.getSecretWord().length() > 0);
     }
 
     @Test
-    public void testIsGameOverWordGUessed() {        
+    public void testIsGameOverWordGUessed() {
         hangman.setSecretWord("test");
-        hangman.guessLetter('t');
-        hangman.guessLetter('e');
-        hangman.guessLetter('s');
+        try {
+            hangman.checkGuessedLetter('t');
+            hangman.checkGuessedLetter('e');
+            hangman.checkGuessedLetter('s');
+        } catch (Exception e) {
+            fail("Exception should not have been thrown");
+        }
         assertTrue(hangman.getGuessedLetters().contains('t'));
         assertTrue(hangman.getGuessedLetters().contains('e'));
         assertTrue(hangman.getGuessedLetters().contains('s'));
@@ -69,31 +83,42 @@ public class HangmanTest {
     }
 
     @Test
-    public void testIsGameOverWordNotGUessed() {        
-        hangman.setSecretWord("test");
-        hangman.guessLetter('t');
-        hangman.guessLetter('e');
+    public void testIsGameOverWordNotGUessed() {
+        try {
+            hangman.setSecretWord("test");
+            hangman.checkGuessedLetter('t');
+            hangman.checkGuessedLetter('e');
+        } catch (Exception e) {
+            fail("Exception should not have been thrown");
+        }
         assertFalse(hangman.isGameOver());
         assertEquals(7, hangman.getGuessesLeft());
     }
 
     @Test
-    public void testIsGameOverNoGuessesLeft() {        
+    public void testIsGameOverNoGuessesLeft() {
         hangman.setSecretWord("test");
-        hangman.guessLetter('t');
-        hangman.guessLetter('e');
-        hangman.guessLetter('f');
-        hangman.guessLetter('f');
+        try {
+            hangman.checkGuessedLetter('t');
+            hangman.checkGuessedLetter('e');
+            hangman.checkGuessedLetter('f');
+        } catch (Exception e) {
+            fail("Exception should not have been thrown");
+        }
         assertEquals(hangman.getGuessesLeft(), 6);
-        hangman.guessLetter('x');
-        hangman.guessLetter('b');
-        hangman.guessLetter('a');
-        hangman.guessLetter('i');
-        hangman.guessLetter('p');
-        hangman.guessLetter('l');
-        assertEquals(hangman.getGuessesLeft(), 0);    
+        try {
+            hangman.checkGuessedLetter('x');
+            hangman.checkGuessedLetter('b');
+            hangman.checkGuessedLetter('a');
+            hangman.checkGuessedLetter('i');
+            hangman.checkGuessedLetter('p');
+            hangman.checkGuessedLetter('l');
+        } catch (Exception e) {
+            fail("Exception should not have been thrown");
+        }
+        assertEquals(hangman.getGuessesLeft(), 0);
         hangman.setResult("Won");
-        assertEquals("Won", hangman.getResult());    
-        assertTrue(hangman.isGameOver());    
+        assertEquals("Won", hangman.getResult());
+        assertTrue(hangman.isGameOver());
     }
 }

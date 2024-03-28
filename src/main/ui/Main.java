@@ -1,18 +1,15 @@
 package ui;
 
+import javax.swing.*;
+
 import model.GamesManager;
 
 // EFFECTS: Class that starts the game
-public class Main {
+public class Main extends JFrame {
 
     public static void main(String[] args) {
 
-        DrawHangman drawer = new DrawHangman();
-        GamesManager manager = new GamesManager();
-        InputHandler inputHandler = new InputHandler(manager);
-
-        drawer.startImage();
-        inputHandler.menu();
+        new GameGUI(new GamesManager());
 
     }
 }
