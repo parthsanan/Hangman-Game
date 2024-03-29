@@ -124,6 +124,12 @@ public class ClassicHangmanTest {
                 testClassicHangmanRookie.setGuessesLeft(0);
 
                 assertTrue(testClassicHangmanRookie.isGameOver());
+                assertTrue(testClassicHangmanMaster.isGameWon());
+
+                assertEquals("Result: Won" + "\n" + "Difficulty: " + "Master" + "\n"
+                        + "Secret Word: " + "phenomenon" + "\n"
+                        + "Guesses Left: " + "7" + "\n"
+                        + "Score: " + 60 + "\n", testClassicHangmanMaster.toString());
         }
 
         @Test

@@ -1,11 +1,10 @@
-package ui;
+package persistance;
 
 import model.ClassicHangman;
 import model.GamesManager;
 import model.Hangman;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import persistance.DataHandler;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,7 +36,6 @@ public class DataHandlerTest {
         // Save the game
         dataHandler.saveGame(game);
 
-        // Read the saved JSON content
         String savedJsonContent = null;
         try {
             savedJsonContent = new String(Files.readAllBytes(Paths.get(dataHandler.getFilePath())));

@@ -29,7 +29,7 @@ public class GameWindow extends JFrame implements ActionListener {
         initializeFields();
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -53,7 +53,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
                 }
 
-            } catch (GuessedLetterException ex) {
+            } catch (GuessedLetterException guessedLetterException) {
 
                 JOptionPane.showMessageDialog(null, "You already guessed that letter!");
 
@@ -62,17 +62,20 @@ public class GameWindow extends JFrame implements ActionListener {
             guessTextField.setText("");
         }
 
+        visibleWordLabel.setText("Word: " + currentGame.getVisibleWord());
+        scoreLabel.setText("Score: " + currentGame.getScore());
+
         if (currentGame.isGameOver()) {
 
             if (currentGame.isGameWon()) {
 
                 JOptionPane.showMessageDialog(null, "Game Over!" + " You won!");
-                currentGame.setResult("Won");
 
             } else {
 
-                JOptionPane.showMessageDialog(null, "Game Over!" + " You lost!");
-                currentGame.setResult("Lost");
+                JOptionPane.showMessageDialog(
+                        null, "Game Over!" + " You lost!" + "\n" + "The word was: "
+                                + currentGame.getSecretWord());
 
             }
 
@@ -86,12 +89,9 @@ public class GameWindow extends JFrame implements ActionListener {
             }
 
             this.dispose();
-            new GameGUI(manager);
+            new StartGUI(manager);
 
         }
-
-        visibleWordLabel.setText("Word: " + currentGame.getVisibleWord());
-        scoreLabel.setText("Score: " + currentGame.getScore());
 
     }
 
@@ -99,8 +99,9 @@ public class GameWindow extends JFrame implements ActionListener {
         this.setSize(800, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+        this.setResizable(false);
 
-        visibleWordLabel = new JLabel("Word" + currentGame.getVisibleWord() + currentGame.getSecretWord());
+        visibleWordLabel = new JLabel("Word: " + currentGame.getVisibleWord());
         visibleWordLabel.setBounds(50, 50, 200, 50);
         this.add(visibleWordLabel);
 

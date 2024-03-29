@@ -8,7 +8,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameGUI extends JFrame implements ActionListener {
+public class StartGUI extends JFrame implements ActionListener {
     private JButton rookieButton;
     private JButton noviceButton;
     private JButton masterButton;
@@ -16,7 +16,7 @@ public class GameGUI extends JFrame implements ActionListener {
     private JButton viewAllButton;
     private GamesManager manager;
 
-    public GameGUI(GamesManager manager) {
+    public StartGUI(GamesManager manager) {
         super("Hangman Game");
         this.manager = manager;
 
@@ -28,7 +28,7 @@ public class GameGUI extends JFrame implements ActionListener {
         initializeTabs(mainPanel, historyPanel, tabbedPane);
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -113,5 +113,6 @@ public class GameGUI extends JFrame implements ActionListener {
         this.setSize(500, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+        this.setResizable(false);
     }
 }

@@ -1,10 +1,10 @@
 package model;
 
+import exceptions.GuessedLetterException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import exceptions.GuessedLetterException;
 
 public abstract class Hangman {
 
@@ -82,6 +82,19 @@ public abstract class Hangman {
     // user.
     public boolean isGameOver() {
 
+        if (guessesLeft <= 0 || getVisibleWord().equals(secretWord)) {
+
+            if (getVisibleWord().equals(secretWord)) {
+
+                setResult("Won");
+
+            } else {
+
+                setResult("Lost");
+            }
+
+        }
+
         return guessesLeft <= 0 || getVisibleWord().equals(secretWord);
 
     }
@@ -125,7 +138,7 @@ public abstract class Hangman {
 
     @Override
     public String toString() {
-        return "Difficulty: " + getDifficulty() + "\n"
+        return "Result: " + getResult() + "\n" + "Difficulty: " + getDifficulty() + "\n"
                 + "Secret Word: " + getSecretWord() + "\n"
                 + "Guesses Left: " + getGuessesLeft() + "\n"
                 + "Score: " + getScore() + "\n";
