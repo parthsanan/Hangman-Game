@@ -56,6 +56,7 @@ public class DataHandlerTest {
         try (FileWriter fileWriter = new FileWriter(dataHandler.getFilePath())) {
             fileWriter.write(savedJsonContent.toString());
         } catch (IOException e) {
+
         }
 
         try {
@@ -63,6 +64,22 @@ public class DataHandlerTest {
                     StandardCharsets.UTF_8);
             assertEquals(savedJsonContent.toString(), content);
         } catch (IOException e) {
+        }
+    }
+
+    @Test
+    void testSaveGameThrowsIOException() {
+        dataHandler.setFilePath("nonexistent/file/path");
+
+        Hangman game = new ClassicHangman("Novice", gamesManager);
+
+        assertThrows(IOException.class, () -> dataHandler.saveGame(game));
+
+        try {
+            dataHandler.saveGame(game);
+            fail();
+        } catch (IOException e) {
+            assertEquals(e.getMessage(), "nonexistent\\file\\path (The system cannot find the path specified)");
         }
     }
 
@@ -95,9 +112,6 @@ public class DataHandlerTest {
 
     @Test
     void testLoadGamesThrowsIOException() {
-        String mockJsonContent = "[{\"result\":\"Won\",\"mode\":\"Classic\",\"difficulty\":\"Novice\"," +
-                "\"secretWord\":\"apple\",\"guessesLeft\":5,\"score\":50}]";
-
         dataHandler.setFilePath("nonexistent/file/path");
 
         try {

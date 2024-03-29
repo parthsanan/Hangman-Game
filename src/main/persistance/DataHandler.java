@@ -76,11 +76,9 @@ public class DataHandler {
         jsonObject.put("score", game.getScore());
         jsonArray.put(jsonObject);
 
-        try (FileWriter fileWriter = new FileWriter(filePath)) {
-            fileWriter.write(jsonArray.toString());
-        } catch (IOException e) {
-            throw e;
-        }
+        FileWriter fileWriter = new FileWriter(filePath);
+        fileWriter.write(jsonArray.toString());
+        fileWriter.close();
     }
 
     public Integer getHighScore(GamesManager manager) {
