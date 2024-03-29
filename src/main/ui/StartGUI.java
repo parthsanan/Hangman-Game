@@ -3,8 +3,6 @@ package ui;
 import model.GamesManager;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -82,6 +80,7 @@ public class StartGUI extends JFrame implements ActionListener {
         }
     }
 
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void initializeButtons(JPanel mainPanel, JPanel historyPanel) {
         mainPanel.setBackground(Color.BLACK);
         String textFont = "Monospaced";

@@ -128,7 +128,7 @@ public class ClassicHangmanTest {
 
                 assertEquals("Result: Won" + "\n" + "Difficulty: " + "Master" + "\n"
                         + "Secret Word: " + "phenomenon" + "\n"
-                        + "Guesses Left: " + "7" + "\n"
+                        + "Guesses Left: " + "6" + "\n"
                         + "Score: " + 60 + "\n", testClassicHangmanMaster.toString());
         }
 

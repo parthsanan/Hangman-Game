@@ -97,7 +97,7 @@ public class DataHandlerTest {
 
         assertEquals(1, gamesManager.getLoadedGames().size());
         Hangman loadedGame = gamesManager.getLoadedGames().get(0);
-        assertEquals("win", loadedGame.getResult());
+        assertEquals("Won", loadedGame.getResult());
         assertEquals("Novice", loadedGame.getDifficulty());
         assertEquals("apple", loadedGame.getSecretWord());
         assertEquals(5, loadedGame.getGuessesLeft());

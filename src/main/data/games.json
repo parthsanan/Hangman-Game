@@ -1,1 +1,1 @@
-[{"result":"Won","mode":"Classic","difficulty":"Novice","score":50,"guessesLeft":5,"secretWord":"apple"},{"result":"Lost","difficulty":"Rookie","score":30,"guessesLeft":0,"secretWord":"chair"}]
+[{"result":"Won","mode":"Classic","difficulty":"Novice","secretWord":"apple","guessesLeft":5,"score":50}]
