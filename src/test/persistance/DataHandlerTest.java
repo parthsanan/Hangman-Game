@@ -28,22 +28,31 @@ public class DataHandlerTest {
     @Test
     void testSaveGame() {
 
+        dataHandler.setFilePath("\\src\\main\\resources\\wrongFile.json");
+
         Hangman game = new ClassicHangman("Novice", gamesManager);
-        game.setResult("win");
+        game.setResult("Won");
         game.setSecretWord("apple");
         game.setGuessesLeft(5);
         game.setScore(50);
 
-        dataHandler.saveGame(game);
+        try {
+            dataHandler.saveGame(game);
+            fail("Expected FileNotFound Exception not thrown!");
+        } catch (IOException e) {
+            // Expected
+        }
 
         String savedJsonContent = null;
 
         try {
-            savedJsonContent = new String(Files.readAllBytes(Paths.get("\\src\\main\\resources\\wrongFile.json")));
+            savedJsonContent = new String(Files.readAllBytes(Paths.get(dataHandler.getFilePath())));
             fail("Should have thrown an exception for invalid file path");
         } catch (IOException e) {
             // Expected
         }
+
+        dataHandler.setFilePath("src\\main\\data\\testGames.json");
 
         try {
             savedJsonContent = new String(Files.readAllBytes(Paths.get(dataHandler.getFilePath())));
@@ -77,6 +86,8 @@ public class DataHandlerTest {
     @Test
     void testLoadGames() {
 
+        dataHandler.setFilePath("\\src\\main\\resources\\wrongFile.json");
+
         String mockJsonContent = "[{\"result\":\"Won\",\"mode\":\"Classic\",\"difficulty\":\"Novice\"," +
                 "\"secretWord\":\"apple\",\"guessesLeft\":5,\"score\":50}]";
 
@@ -84,16 +95,17 @@ public class DataHandlerTest {
             Files.write(Paths.get("\\src\\main\\resources\\wrongFile.json"), mockJsonContent.getBytes());
             fail("Should have thrown an exception for invalid file path");
         } catch (IOException e) {
-            // Expected
+            assertEquals(e.getMessage(), "\\src\\main\\resources\\wrongFile.json");
         }
+
+        dataHandler.setFilePath("src\\main\\data\\testGames.json");
 
         try {
             Files.write(Paths.get(dataHandler.getFilePath()), mockJsonContent.getBytes());
+            dataHandler.loadGames(gamesManager);
         } catch (IOException e) {
-            e.printStackTrace();
+            fail();
         }
-
-        dataHandler.loadGames(gamesManager);
 
         assertEquals(1, gamesManager.getLoadedGames().size());
         Hangman loadedGame = gamesManager.getLoadedGames().get(0);

@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class GameWindow extends JFrame implements ActionListener {
 
@@ -118,8 +119,13 @@ public class GameWindow extends JFrame implements ActionListener {
                         JOptionPane.YES_NO_OPTION);
 
                 if (response == JOptionPane.YES_OPTION) {
-                    manager.getDataHandler().saveGame(currentGame);
-                    JOptionPane.showMessageDialog(null, "Game Saved!");
+                    try {
+                        manager.getDataHandler().saveGame(currentGame);
+                        JOptionPane.showMessageDialog(null, "Game Saved!");
+                    } catch (IOException ioException) {
+                        JOptionPane.showMessageDialog(null, "Error! Game Not Saved");
+                    }
+
                 }
 
                 this.dispose();

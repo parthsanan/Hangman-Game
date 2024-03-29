@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class StartGUI extends JFrame implements ActionListener {
     private JButton rookieButton;
@@ -76,9 +77,13 @@ public class StartGUI extends JFrame implements ActionListener {
 
         } else if (e.getSource() == loadAllButton) {
 
-            manager.getDataHandler().loadGames(manager);
-            JOptionPane.showMessageDialog(null, manager.getLoadedGames().size() + " Games Loaded!");
-            highScoreLabel.setText("High Score: " + manager.getDataHandler().getHighScore(manager));
+            try {
+                manager.getDataHandler().loadGames(manager);
+                JOptionPane.showMessageDialog(null, manager.getLoadedGames().size() + " Games Loaded!");
+                highScoreLabel.setText("High Score: " + manager.getDataHandler().getHighScore(manager));
+            } catch (IOException ioException) {
+                JOptionPane.showMessageDialog(null, "Error! Games Not Loaded!");
+            }
 
         } else if (e.getSource() == filterByWordButton) {
 

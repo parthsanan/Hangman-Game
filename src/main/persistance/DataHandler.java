@@ -25,7 +25,7 @@ public class DataHandler {
 
     // EFFECTS: Load existing games from file
     @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
-    public void loadGames(GamesManager manager) {
+    public void loadGames(GamesManager manager) throws IOException {
 
         manager.setLoadedGames(new ArrayList<Hangman>());
 
@@ -53,12 +53,12 @@ public class DataHandler {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException();
         }
     }
 
     // Save singular game to file
-    public void saveGame(Hangman game) {
+    public void saveGame(Hangman game) throws IOException {
         JSONArray jsonArray;
 
         try {
@@ -79,7 +79,7 @@ public class DataHandler {
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             fileWriter.write(jsonArray.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException();
         }
     }
 
