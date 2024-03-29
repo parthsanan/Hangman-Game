@@ -3,7 +3,6 @@ package persistance;
 import model.ClassicHangman;
 import model.GamesManager;
 import model.Hangman;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 public class DataHandler {
 
     protected String filePath;
+    protected FileWriter fileWriter;
     protected ArrayList<Hangman> gamesPlayed;
 
     public DataHandler() {
@@ -76,9 +76,16 @@ public class DataHandler {
         jsonObject.put("score", game.getScore());
         jsonArray.put(jsonObject);
 
-        FileWriter fileWriter = new FileWriter(filePath);
-        fileWriter.write(jsonArray.toString());
-        fileWriter.close();
+        writeToFile(jsonArray.toString());
+    }
+
+    // Method for writing to a file
+    protected void writeToFile(String content) throws IOException {
+        try (FileWriter fileWriter = new FileWriter(filePath)) {
+            fileWriter.write(content);
+        } catch (IOException e) {
+            throw e;
+        }
     }
 
     public Integer getHighScore(GamesManager manager) {

@@ -31,5 +31,6 @@
     <orderEntry type="library" name="apache.commons.lang3" level="project" />
     <orderEntry type="library" name="json" level="project" />
     <orderEntry type="library" name="jacoco.report" level="project" />
+    <orderEntry type="library" name="mockito.core" level="project" />
   </component>
 </module>

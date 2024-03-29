@@ -1,17 +1,1 @@
-[
-  {
-    "result": "Won",
-    "mode": "Classic",
-    "difficulty": "Novice",
-    "score": 50,
-    "guessesLeft": 5,
-    "secretWord": "apple"
-  },
-  {
-    "result": "Won",
-    "difficulty": "Rookie",
-    "score": 30,
-    "guessesLeft": 2,
-    "secretWord": "sun"
-  }
-]
+[{"result":"Won","mode":"Classic","difficulty":"Novice","secretWord":"apple","guessesLeft":5,"score":50}]

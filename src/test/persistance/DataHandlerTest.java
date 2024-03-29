@@ -22,6 +22,7 @@ public class DataHandlerTest {
     @BeforeEach
     void setUp() {
         dataHandler = new DataHandler();
+        dataHandler.setFilePath("src/main/data/testGames.json");
         gamesManager = new GamesManager();
     }
 
@@ -30,8 +31,6 @@ public class DataHandlerTest {
 
         Hangman game = new ClassicHangman("Novice", gamesManager);
         String savedJsonContent = null;
-
-        dataHandler.setFilePath("src/main/data/testGames.json");
 
         game.setResult("Won");
         game.setSecretWord("apple");
@@ -77,6 +76,53 @@ public class DataHandlerTest {
 
         try {
             dataHandler.saveGame(game);
+            fail();
+        } catch (IOException e) {
+            assertEquals(e.getMessage(), "nonexistent\\file\\path (The system cannot find the path specified)");
+        }
+    }
+
+    @Test
+    void testWriteToFile() {
+        try {
+            dataHandler.writeToFile("[\r\n" + //
+                    "  {\r\n" + //
+                    "    \"result\": \"Won\",\r\n" + //
+                    "    \"mode\": \"Classic\",\r\n" + //
+                    "    \"difficulty\": \"Novice\",\r\n" + //
+                    "    \"score\": 50,\r\n" + //
+                    "    \"guessesLeft\": 5,\r\n" + //
+                    "    \"secretWord\": \"apple\"\r\n" + //
+                    "  }]");
+
+            String savedJsonContent = new String(Files.readAllBytes(Paths.get(dataHandler.getFilePath())));
+
+            try {
+                String content = new String(Files.readAllBytes(Paths.get(dataHandler.getFilePath())),
+                        StandardCharsets.UTF_8);
+                assertEquals(savedJsonContent.toString(), content);
+            } catch (IOException e) {
+                fail();
+            }
+
+        } catch (IOException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void testWriteToFileThrowsIOE() {
+        dataHandler.setFilePath("nonexistent/file/path");
+        try {
+            dataHandler.writeToFile("[\r\n" + //
+                    "  {\r\n" + //
+                    "    \"result\": \"Won\",\r\n" + //
+                    "    \"mode\": \"Classic\",\r\n" + //
+                    "    \"difficulty\": \"Novice\",\r\n" + //
+                    "    \"score\": 50,\r\n" + //
+                    "    \"guessesLeft\": 5,\r\n" + //
+                    "    \"secretWord\": \"apple\"\r\n" + //
+                    "  }]");
             fail();
         } catch (IOException e) {
             assertEquals(e.getMessage(), "nonexistent\\file\\path (The system cannot find the path specified)");
