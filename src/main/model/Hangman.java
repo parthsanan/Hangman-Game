@@ -41,6 +41,7 @@ public abstract class Hangman {
             } else {
 
                 visibleWordBuilder.append('_');
+                visibleWordBuilder.append(' ');
 
             }
         }
@@ -82,7 +83,9 @@ public abstract class Hangman {
     // user.
     public boolean isGameOver() {
 
-        if (guessesLeft <= 0 || getVisibleWord().equals(secretWord)) {
+        String wordGuessed = getVisibleWord().replaceAll("\\s", "");
+
+        if (guessesLeft <= 0 || wordGuessed.equals(secretWord)) {
 
             if (getVisibleWord().equals(secretWord)) {
 

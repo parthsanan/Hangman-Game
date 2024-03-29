@@ -31,14 +31,16 @@ public class GamesManager {
                 "chameleon", "platypus", "flamingo", "cheetah", "ostrich", "orangutan"
         };
         this.masterWords = new String[] {
-                "phenomenon", "onomatopoeia", "ubiquitous", "serendipity",
-                "juxtaposition", "paradox", "synergy", "algorithm", "quantum", "holography",
-                "architecture", "surreptitious", "chiaroscuro", "mnemonic", "polyglot",
-                "acquiesce", "allegiance", "circumvent", "perplexity", "benevolence",
-                "procrastinate", "capitulate", "cacophony", "ubiquitous", "narcissist",
-                "ambiguity", "loquacious", "obfuscate", "exacerbate", "idiosyncratic",
-                "paragon", "quintessential", "serendipity", "vernacular", "antagonist"
+                "sesquipedalian", "antidisestablishmentarianism", "pulchritudinous",
+                "supercalifragilisticexpialidocious", "onomatopoeia", "hyperbolic", "polyethylene",
+                "incomprehensibility", "plenipotentiary", "sesquicentennial", "sesquioxide", "antiestablishmentarian",
+                "supererogatory", "indefatigable", "mnemonic", "ambidextrous", "circumlocution", "perspicacious",
+                "antepenultimate", "indefatigable", "antiquarianism", "circumlocution", "supercilious",
+                "sesquicentennial", "antepenultimate", "onomatopoeic", "hyperbolize", "sesquicentennial",
+                "incomprehensibility", "supercilious", "perspicacious", "antidisestablishmentarian", "circumlocution",
+                "antiquarianism", "antepenultimate"
         };
+
     }
 
     public ArrayList<Hangman> getLoadedGames() {

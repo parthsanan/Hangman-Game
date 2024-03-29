@@ -33,7 +33,7 @@ public class GameWindow extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == submitGuessButton) {
+        if ((e.getSource() == submitGuessButton) || (e.getSource() == guessTextField)) {
 
             String strLetter = guessTextField.getText();
             char charLetter = strLetter.charAt(0);
@@ -95,11 +95,13 @@ public class GameWindow extends JFrame implements ActionListener {
 
     }
 
+    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
     public void initializeFields() {
         this.setSize(800, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setResizable(false);
+        this.setLayout(null);
 
         visibleWordLabel = new JLabel("Word: " + currentGame.getVisibleWord());
         visibleWordLabel.setBounds(50, 50, 200, 50);
@@ -119,14 +121,13 @@ public class GameWindow extends JFrame implements ActionListener {
 
         guessTextField = new JTextField();
         guessTextField.setBounds(50, 100, 200, 50);
+        guessTextField.addActionListener(this);
         this.add(guessTextField);
 
         submitGuessButton = new JButton("Submit Guess");
         submitGuessButton.setBounds(50, 150, 200, 50);
         submitGuessButton.addActionListener(this);
         this.add(submitGuessButton);
-
-        this.setLayout(null);
     }
 
 }
