@@ -57,28 +57,35 @@ public abstract class Hangman {
 
         String[] array = new String[] {};
 
-        switch (difficulty) {
-            case "Master":
-                array = manager.getMasterWords();
-                break;
+        if (difficulty == "Master") {
 
-            case "Novice":
-                array = manager.getNoviceWords();
-                break;
+            array = manager.getMasterWords();
 
-            case "Rookie":
-                array = manager.getRookieWords();
-                break;
+        } else if (difficulty == "Novice") {
 
-            default:
-                break;
+            array = manager.getNoviceWords();
+
+        } else if (difficulty == "Rookie") {
+
+            array = manager.getRookieWords();
+
         }
 
-        Random generator = new Random();
+        if (array.length > 0) {
 
-        setSecretWord(array[generator.nextInt(array.length)]);
+            Random generator = new Random();
 
-        return getSecretWord();
+            int index = generator.nextInt(array.length);
+
+            setSecretWord(array[index]);
+
+            return getSecretWord();
+
+        } else {
+
+            return "Zero";
+
+        }
 
     }
 

@@ -60,8 +60,8 @@ public class HangmanTest {
         assertTrue(hangman.getSecretWord().length() > 0);
 
         try {
-            assertEquals(hangman.chooseSecretWord(manager, null), "");
-            fail();
+            assertEquals(hangman.chooseSecretWord(manager, null), "Zero");
+            
         } catch (Exception e) {
             // Exception should be thrown
         }
