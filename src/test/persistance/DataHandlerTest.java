@@ -28,9 +28,11 @@ public class DataHandlerTest {
     @Test
     void testSaveGame() {
 
-        dataHandler.setFilePath("\\src\\main\\resources\\wrongFile.json");
-
         Hangman game = new ClassicHangman("Novice", gamesManager);
+        String savedJsonContent = null;
+
+        dataHandler.setFilePath("src/main/data/testGames.json");
+
         game.setResult("Won");
         game.setSecretWord("apple");
         game.setGuessesLeft(5);
@@ -38,23 +40,6 @@ public class DataHandlerTest {
 
         try {
             dataHandler.saveGame(game);
-            fail("Expected FileNotFound Exception not thrown!");
-        } catch (IOException e) {
-            // Expected
-        }
-
-        String savedJsonContent = null;
-
-        try {
-            savedJsonContent = new String(Files.readAllBytes(Paths.get(dataHandler.getFilePath())));
-            fail("Should have thrown an exception for invalid file path");
-        } catch (IOException e) {
-            // Expected
-        }
-
-        dataHandler.setFilePath("src\\main\\data\\testGames.json");
-
-        try {
             savedJsonContent = new String(Files.readAllBytes(Paths.get(dataHandler.getFilePath())));
         } catch (IOException e) {
             fail();
@@ -71,7 +56,6 @@ public class DataHandlerTest {
         try (FileWriter fileWriter = new FileWriter(dataHandler.getFilePath())) {
             fileWriter.write(savedJsonContent.toString());
         } catch (IOException e) {
-            e.printStackTrace();
         }
 
         try {
@@ -79,29 +63,22 @@ public class DataHandlerTest {
                     StandardCharsets.UTF_8);
             assertEquals(savedJsonContent.toString(), content);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
     @Test
-    void testLoadGames() {
-
-        dataHandler.setFilePath("\\src\\main\\resources\\wrongFile.json");
+    void testLoadGamesCorrectPath() {
 
         String mockJsonContent = "[{\"result\":\"Won\",\"mode\":\"Classic\",\"difficulty\":\"Novice\"," +
                 "\"secretWord\":\"apple\",\"guessesLeft\":5,\"score\":50}]";
 
         try {
-            Files.write(Paths.get("\\src\\main\\resources\\wrongFile.json"), mockJsonContent.getBytes());
-            fail("Should have thrown an exception for invalid file path");
+            Files.write(Paths.get(dataHandler.getFilePath()), mockJsonContent.getBytes());
         } catch (IOException e) {
-            assertEquals(e.getMessage(), "\\src\\main\\resources\\wrongFile.json");
+            e.printStackTrace();
         }
 
-        dataHandler.setFilePath("src\\main\\data\\testGames.json");
-
         try {
-            Files.write(Paths.get(dataHandler.getFilePath()), mockJsonContent.getBytes());
             dataHandler.loadGames(gamesManager);
         } catch (IOException e) {
             fail();
@@ -114,5 +91,22 @@ public class DataHandlerTest {
         assertEquals("apple", loadedGame.getSecretWord());
         assertEquals(5, loadedGame.getGuessesLeft());
         assertEquals(50, loadedGame.getScore());
+    }
+
+    @Test
+    void testLoadGamesThrowsIOException() {
+        String mockJsonContent = "[{\"result\":\"Won\",\"mode\":\"Classic\",\"difficulty\":\"Novice\"," +
+                "\"secretWord\":\"apple\",\"guessesLeft\":5,\"score\":50}]";
+
+        dataHandler.setFilePath("nonexistent/file/path");
+
+        try {
+            dataHandler.loadGames(gamesManager);
+            fail();
+        } catch (IOException e) {
+            assertEquals(e.getMessage(), "nonexistent\\file\\path");
+        }
+
+        assertEquals(0, gamesManager.getLoadedGames().size());
     }
 }

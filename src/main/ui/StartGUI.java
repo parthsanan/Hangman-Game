@@ -33,7 +33,7 @@ public class StartGUI extends JFrame implements ActionListener {
         initializeTabs(mainPanel, historyPanel, tabbedPane);
     }
 
-    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -82,7 +82,8 @@ public class StartGUI extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, manager.getLoadedGames().size() + " Games Loaded!");
                 highScoreLabel.setText("High Score: " + manager.getDataHandler().getHighScore(manager));
             } catch (IOException ioException) {
-                JOptionPane.showMessageDialog(null, "Error! Games Not Loaded!");
+                JOptionPane.showMessageDialog(null, "Error!");
+
             }
 
         } else if (e.getSource() == filterByWordButton) {
@@ -118,7 +119,7 @@ public class StartGUI extends JFrame implements ActionListener {
         }
     }
 
-    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void initializeButtons(JPanel mainPanel, JPanel historyPanel) {
         mainPanel.setBackground(Color.BLACK);
         String textFont = "Monospaced";

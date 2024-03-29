@@ -53,7 +53,7 @@ public class DataHandler {
             }
 
         } catch (IOException e) {
-            throw new IOException();
+            throw e;
         }
     }
 
@@ -79,7 +79,7 @@ public class DataHandler {
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             fileWriter.write(jsonArray.toString());
         } catch (IOException e) {
-            throw new IOException();
+            throw e;
         }
     }
 

@@ -33,7 +33,7 @@ public class GameWindow extends JFrame implements ActionListener {
         initializeFields();
     }
 
-    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -123,9 +123,9 @@ public class GameWindow extends JFrame implements ActionListener {
                         manager.getDataHandler().saveGame(currentGame);
                         JOptionPane.showMessageDialog(null, "Game Saved!");
                     } catch (IOException ioException) {
-                        JOptionPane.showMessageDialog(null, "Error! Game Not Saved");
-                    }
+                        JOptionPane.showMessageDialog(null, "Error while saving game!");
 
+                    }
                 }
 
                 this.dispose();
@@ -136,7 +136,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
     }
 
-    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void initializeFields() {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
