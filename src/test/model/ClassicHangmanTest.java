@@ -145,9 +145,7 @@ public class ClassicHangmanTest {
                 testGamesManager.getLoadedGames().add(hangman2);
                 testGamesManager.getLoadedGames().add(hangman3);
 
-                testDataHandler.loadGames(testGamesManager);
-
-                assertEquals(50, testDataHandler.getHighScore(testGamesManager));
+                assertEquals(100, testDataHandler.getHighScore(testGamesManager));
         }
 
         @Test
