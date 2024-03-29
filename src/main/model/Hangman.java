@@ -69,6 +69,9 @@ public abstract class Hangman {
             case "Rookie":
                 array = manager.getRookieWords();
                 break;
+
+            default:
+                break;
         }
 
         Random generator = new Random();

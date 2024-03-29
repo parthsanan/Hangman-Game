@@ -34,6 +34,7 @@ public class GamesManagerTest {
         Hangman game = new ClassicHangman("Novice", gamesManager);
 
         gamesManager.addToLoadedGames(game);
+        assertNotNull(gamesManager.getDataHandler());
 
         assertEquals(1, gamesManager.getLoadedGames().size());
         assertTrue(gamesManager.getLoadedGames().contains(game));
@@ -43,5 +44,4 @@ public class GamesManagerTest {
         gamesManager.addToLoadedGames(hangman);
         assertTrue(gamesManager.getLoadedGames().contains(hangman));
     }
-
 }

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,6 +58,22 @@ public class HangmanTest {
     public void testChooseSecretWord() {
         assertNotNull(hangman.getSecretWord());
         assertTrue(hangman.getSecretWord().length() > 0);
+
+        try {
+            assertEquals(hangman.chooseSecretWord(manager, null), "");
+            fail();
+        } catch (Exception e) {
+            // Exception should be thrown
+        }
+
+        String secretWord = hangman.chooseSecretWord(manager, "Master");
+        assertTrue(Arrays.asList(manager.getMasterWords()).contains(secretWord));
+
+        String secretWord2 = hangman.chooseSecretWord(manager, "Novice");
+        assertTrue(Arrays.asList(manager.getNoviceWords()).contains(secretWord2));
+
+        String secretWord3 = hangman.chooseSecretWord(manager, "Rookie");
+        assertTrue(Arrays.asList(manager.getRookieWords()).contains(secretWord3));
     }
 
     @Test

@@ -132,7 +132,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
     @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
     public void initializeFields() {
-        this.setSize(800, 600);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setResizable(false);
@@ -140,11 +140,11 @@ public class GameWindow extends JFrame implements ActionListener {
 
         ImageIcon hangmanImage = new ImageIcon("src\\main\\assets\\images\\hangmanStart.jpg");
         hangmanLabel = new JLabel(hangmanImage);
-        hangmanLabel.setBounds(300, 50, 400, 400);
-        add(hangmanLabel, BorderLayout.EAST);
+        hangmanLabel.setBounds(350, 50, 450, 400);
+        this.add(hangmanLabel, BorderLayout.EAST);
 
         visibleWordLabel = new JLabel("Word: " + currentGame.getVisibleWord());
-        visibleWordLabel.setBounds(50, 50, 500, 50);
+        visibleWordLabel.setBounds(50, 50, 300, 50);
         this.add(visibleWordLabel);
 
         responseLabel = new JLabel("GUESS!");

@@ -52,7 +52,7 @@ public class DataHandlerTest {
         }
 
         assertNotNull(savedJsonContent);
-        assertTrue(savedJsonContent.contains("\"result\":\"win\""));
+        assertTrue(savedJsonContent.contains("\"result\":\"Won\""));
         assertTrue(savedJsonContent.contains("\"mode\":\"Classic\""));
         assertTrue(savedJsonContent.contains("\"difficulty\":\"Novice\""));
         assertTrue(savedJsonContent.contains("\"secretWord\":\"apple\""));
@@ -77,7 +77,7 @@ public class DataHandlerTest {
     @Test
     void testLoadGames() {
 
-        String mockJsonContent = "[{\"result\":\"win\",\"mode\":\"Classic\",\"difficulty\":\"Novice\"," +
+        String mockJsonContent = "[{\"result\":\"Won\",\"mode\":\"Classic\",\"difficulty\":\"Novice\"," +
                 "\"secretWord\":\"apple\",\"guessesLeft\":5,\"score\":50}]";
 
         try {
