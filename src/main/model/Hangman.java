@@ -19,7 +19,7 @@ public abstract class Hangman {
     public Hangman(String difficulty, GamesManager manager) {
 
         this.difficulty = difficulty;
-        this.guessesLeft = 7;
+        this.guessesLeft = 6;
         this.score = 0;
         this.guessedLetters = new ArrayList<Character>();
         this.secretWord = chooseSecretWord(manager, getDifficulty());
@@ -57,7 +57,7 @@ public abstract class Hangman {
 
         String[] array = new String[] {};
 
-        switch (getDifficulty()) {
+        switch (difficulty) {
             case "Master":
                 array = manager.getMasterWords();
                 break;

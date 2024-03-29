@@ -30,27 +30,27 @@ public class HangmanTest {
         }
 
         assertEquals(10, hangman.getScore());
-        assertEquals(7, hangman.getGuessesLeft());
+        assertEquals(6, hangman.getGuessesLeft());
         assertTrue(hangman.getVisibleWord().contains("t"));
         try {
             hangman.checkGuessedLetter('x');
         } catch (Exception e) {
             fail("Exception should not have been thrown");
         }
-        assertEquals(6, hangman.getGuessesLeft());
+        assertEquals(5, hangman.getGuessesLeft());
         assertFalse(hangman.getVisibleWord().contains("x"));
     }
 
     @Test
     public void testGetVisibleWord() {
         hangman.setSecretWord("test");
-        assertEquals("____", hangman.getVisibleWord());
+        assertEquals("_ _ _ _ ", hangman.getVisibleWord());
         try {
             hangman.checkGuessedLetter('t');
         } catch (Exception e) {
             fail("Exception should not have been thrown");
         }
-        assertEquals("t__t", hangman.getVisibleWord());
+        assertEquals("t_ _ t", hangman.getVisibleWord());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class HangmanTest {
             fail("Exception should not have been thrown");
         }
         assertFalse(hangman.isGameOver());
-        assertEquals(7, hangman.getGuessesLeft());
+        assertEquals(6, hangman.getGuessesLeft());
     }
 
     @Test
@@ -105,14 +105,13 @@ public class HangmanTest {
         } catch (Exception e) {
             fail("Exception should not have been thrown");
         }
-        assertEquals(hangman.getGuessesLeft(), 6);
+        assertEquals(hangman.getGuessesLeft(), 5);
         try {
             hangman.checkGuessedLetter('x');
             hangman.checkGuessedLetter('b');
             hangman.checkGuessedLetter('a');
             hangman.checkGuessedLetter('i');
             hangman.checkGuessedLetter('p');
-            hangman.checkGuessedLetter('l');
         } catch (Exception e) {
             fail("Exception should not have been thrown");
         }

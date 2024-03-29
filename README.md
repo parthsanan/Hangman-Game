@@ -31,6 +31,6 @@ With multiple genres of varying difficulties and a timed mode, it removes all th
 
 - You can generate the first required action related to the user story "adding multiple HangmanGames to a GameManager" by choosing to save a game after it is over.
 - You can generate the second required action related to the user story "loading and saving the state of the application" by loading the saved games in the History Tab.
-- You can locate my visual component by...
+- You can locate my visual component by navigating to view the hangman while the game is played.
 - You can save the state of the application by pressing save after finishing a game.
 - You can load all the previously played games by navigating to the Load Games option in the History Tab.
