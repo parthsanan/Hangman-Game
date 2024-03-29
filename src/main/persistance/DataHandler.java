@@ -80,7 +80,7 @@ public class DataHandler {
     }
 
     // Method for writing to a file
-    protected void writeToFile(String content) throws IOException {
+    public void writeToFile(String content) throws IOException {
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             fileWriter.write(content);
         } catch (IOException e) {

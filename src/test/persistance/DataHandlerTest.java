@@ -16,12 +16,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DataHandlerTest {
 
-    private DataHandler dataHandler;
+    private TestDataHandler dataHandler;
     private GamesManager gamesManager;
 
     @BeforeEach
     void setUp() {
-        dataHandler = new DataHandler();
+        dataHandler = new TestDataHandler();
         dataHandler.setFilePath("src/main/data/testGames.json");
         gamesManager = new GamesManager();
     }
@@ -39,6 +39,7 @@ public class DataHandlerTest {
 
         try {
             dataHandler.saveGame(game);
+            assertTrue(dataHandler.writeToFileCalled);
             savedJsonContent = new String(Files.readAllBytes(Paths.get(dataHandler.getFilePath())));
         } catch (IOException e) {
             fail();
@@ -84,29 +85,21 @@ public class DataHandlerTest {
 
     @Test
     void testWriteToFile() {
+        TestDataHandler dataHandler = new TestDataHandler();
+        String content = "Test content";
+
         try {
-            dataHandler.writeToFile("[\r\n" + //
-                    "  {\r\n" + //
-                    "    \"result\": \"Won\",\r\n" + //
-                    "    \"mode\": \"Classic\",\r\n" + //
-                    "    \"difficulty\": \"Novice\",\r\n" + //
-                    "    \"score\": 50,\r\n" + //
-                    "    \"guessesLeft\": 5,\r\n" + //
-                    "    \"secretWord\": \"apple\"\r\n" + //
-                    "  }]");
-
-            String savedJsonContent = new String(Files.readAllBytes(Paths.get(dataHandler.getFilePath())));
-
-            try {
-                String content = new String(Files.readAllBytes(Paths.get(dataHandler.getFilePath())),
-                        StandardCharsets.UTF_8);
-                assertEquals(savedJsonContent.toString(), content);
-            } catch (IOException e) {
-                fail();
-            }
-
+            dataHandler.writeToFile(content);
         } catch (IOException e) {
-            fail();
+            e.printStackTrace();
+        }
+        
+        try {
+            String writtenContent = new String(Files.readAllBytes(Paths.get(dataHandler.getFilePath())),
+                    StandardCharsets.UTF_8);
+            assertEquals(content, writtenContent);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -168,5 +161,15 @@ public class DataHandlerTest {
         }
 
         assertEquals(0, gamesManager.getLoadedGames().size());
+    }
+
+    static class TestDataHandler extends DataHandler {
+        boolean writeToFileCalled = false;
+
+        @Override
+        public void writeToFile(String content) throws IOException {
+            writeToFileCalled = true;
+            super.writeToFile(content);
+        }
     }
 }
