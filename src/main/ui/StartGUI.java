@@ -13,9 +13,11 @@ public class StartGUI extends JFrame implements ActionListener {
     private JButton masterButton;
     private JButton loadAllButton;
     private JButton viewAllButton;
+    private JButton filterByWordButton;
 
     private JLabel titleLabel;
     private JLabel chooseLevelLabel;
+    private JLabel highScoreLabel;
     private GamesManager manager;
 
     public StartGUI(GamesManager manager) {
@@ -76,11 +78,42 @@ public class StartGUI extends JFrame implements ActionListener {
 
             manager.getDataHandler().loadGames(manager);
             JOptionPane.showMessageDialog(null, manager.getLoadedGames().size() + " Games Loaded!");
+            highScoreLabel.setText("High Score: " + manager.getDataHandler().getHighScore(manager));
+
+        } else if (e.getSource() == filterByWordButton) {
+
+            String word = JOptionPane.showInputDialog("Enter word to filter by:");
+            StringBuilder gameDetails = new StringBuilder();
+
+            for (int i = 0; i < manager.getLoadedGames().size(); i++) {
+
+                if (manager.getLoadedGames().get(i).getSecretWord().equals(word)) {
+
+                    gameDetails.append(manager.getLoadedGames().get(i).toString()).append("\n");
+
+                }
+
+            }
+
+            if (gameDetails.length() == 0) {
+
+                JOptionPane.showMessageDialog(null, "No games found with word: " + word);
+
+            } else {
+
+                JTextArea textArea = new JTextArea(gameDetails.toString());
+                textArea.setEditable(false);
+                JScrollPane scrollPane = new JScrollPane(textArea);
+                scrollPane.setPreferredSize(new Dimension(500, 500));
+                JOptionPane.showMessageDialog(null, scrollPane, "Games with word: " + word,
+                        JOptionPane.INFORMATION_MESSAGE);
+
+            }
 
         }
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
     public void initializeButtons(JPanel mainPanel, JPanel historyPanel) {
         mainPanel.setBackground(Color.BLACK);
         String textFont = "Monospaced";
@@ -128,6 +161,18 @@ public class StartGUI extends JFrame implements ActionListener {
         viewAllButton.addActionListener(this);
         viewAllButton.setBounds(250, 100, 150, 50);
         historyPanel.add(viewAllButton);
+
+        highScoreLabel = new JLabel("High Score: " + manager.getDataHandler().getHighScore(manager));
+        highScoreLabel.setFont(new Font(textFont, Font.BOLD, 17));
+        highScoreLabel.setForeground(Color.WHITE);
+        highScoreLabel.setBounds(50, 200, 200, 50);
+        historyPanel.add(highScoreLabel);
+
+        filterByWordButton = new JButton("Filter Games");
+        filterByWordButton.setFont(new Font(textFont, Font.BOLD, 17));
+        filterByWordButton.addActionListener(this);
+        filterByWordButton.setBounds(450, 100, 200, 50);
+        historyPanel.add(filterByWordButton);
 
         masterButton.setBackground(Color.WHITE);
         loadAllButton.setBackground(Color.WHITE);

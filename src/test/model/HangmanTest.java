@@ -61,7 +61,7 @@ public class HangmanTest {
 
         try {
             assertEquals(hangman.chooseSecretWord(manager, null), "Zero");
-            
+
         } catch (Exception e) {
             // Exception should be thrown
         }

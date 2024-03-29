@@ -83,11 +83,11 @@ public class DataHandler {
         }
     }
 
-    public Integer getHighScore() {
+    public Integer getHighScore(GamesManager manager) {
 
         Integer highScore = 0;
 
-        for (Hangman game : gamesPlayed) {
+        for (Hangman game : manager.getLoadedGames()) {
 
             if (game.getScore() > highScore) {
 

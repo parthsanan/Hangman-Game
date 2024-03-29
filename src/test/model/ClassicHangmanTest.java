@@ -127,9 +127,9 @@ public class ClassicHangmanTest {
                 assertTrue(testClassicHangmanMaster.isGameWon());
 
                 assertEquals("Result: Won" + "\n" + "Difficulty: " + "Master" + "\n"
-                        + "Secret Word: " + "phenomenon" + "\n"
-                        + "Guesses Left: " + "6" + "\n"
-                        + "Score: " + 60 + "\n", testClassicHangmanMaster.toString());
+                                + "Secret Word: " + "phenomenon" + "\n"
+                                + "Guesses Left: " + "6" + "\n"
+                                + "Score: " + 60 + "\n", testClassicHangmanMaster.toString());
         }
 
         @Test
@@ -140,11 +140,14 @@ public class ClassicHangmanTest {
                 hangman2.setScore(100);
                 Hangman hangman3 = new ClassicHangman("Master", testGamesManager);
                 hangman3.setScore(75);
-                testDataHandler.getGamesPlayed().add(hangman1);
-                testDataHandler.getGamesPlayed().add(hangman2);
-                testDataHandler.getGamesPlayed().add(hangman3);
 
-                assertEquals(100, testDataHandler.getHighScore());
+                testGamesManager.getLoadedGames().add(hangman1);
+                testGamesManager.getLoadedGames().add(hangman2);
+                testGamesManager.getLoadedGames().add(hangman3);
+
+                testDataHandler.loadGames(testGamesManager);
+
+                assertEquals(50, testDataHandler.getHighScore(testGamesManager));
         }
 
         @Test
