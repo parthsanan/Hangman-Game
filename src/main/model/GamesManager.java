@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class GamesManager {
 
     protected DataHandler dataHandler;
-    ArrayList<Hangman> loadedGames;
+    protected ArrayList<Hangman> loadedGames;
 
     protected String[] rookieWords;
     protected String[] noviceWords;

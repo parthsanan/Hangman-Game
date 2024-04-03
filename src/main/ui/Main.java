@@ -1,11 +1,9 @@
 package ui;
 
-import javax.swing.*;
-
 import model.GamesManager;
 
 // EFFECTS: Class that starts the game
-public class Main extends JFrame {
+public class Main {
 
     public static void main(String[] args) {
 

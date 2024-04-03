@@ -15,6 +15,7 @@ import java.io.IOException;
 public class GameWindow extends JFrame implements ActionListener {
 
     private Hangman currentGame;
+    private GamesManager manager;
 
     private JLabel visibleWordLabel;
     private JLabel scoreLabel;
@@ -23,7 +24,6 @@ public class GameWindow extends JFrame implements ActionListener {
     private JLabel hangmanLabel;
     private JTextField guessTextField;
     private JButton submitGuessButton;
-    private GamesManager manager;
 
     // EFFECTS: Instantiates a new game window
     public GameWindow(GamesManager manager, String difficulty) {

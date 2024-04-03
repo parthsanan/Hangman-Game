@@ -20,6 +20,7 @@ public class StartGUI extends JFrame implements ActionListener {
     private JLabel titleLabel;
     private JLabel chooseLevelLabel;
     private JLabel highScoreLabel;
+
     private GamesManager manager;
 
     public StartGUI(GamesManager manager) {

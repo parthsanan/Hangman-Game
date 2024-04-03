@@ -19,14 +19,14 @@ public class DataHandler {
 
     public DataHandler() {
         this.filePath = "./src/main/data/games.json";
-        this.gamesPlayed = new ArrayList<>();
+        this.gamesPlayed = new ArrayList<Hangman>();
     }
 
     // EFFECTS: Load existing games from file
     @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
     public void loadGames(GamesManager manager) throws IOException {
 
-        manager.setLoadedGames(new ArrayList<Hangman>());
+        manager.setLoadedGames(new ArrayList<>());
 
         try {
             String content = new String(Files.readAllBytes(Paths.get(filePath)));
@@ -39,9 +39,8 @@ public class DataHandler {
                 String secretWord = jsonObject.getString("secretWord");
                 Integer guessesLeft = jsonObject.getInt("guessesLeft");
                 Integer score = jsonObject.getInt("score");
-                Hangman game = null;
 
-                game = new ClassicHangman(difficulty, manager);
+                Hangman game = new ClassicHangman(difficulty, manager);
 
                 game.setResult(result);
                 game.setSecretWord(secretWord);
@@ -77,6 +76,7 @@ public class DataHandler {
 
         writeToFile(jsonArray.toString());
         manager.gameAdded(game);
+        manager.addToLoadedGames(game);
     }
 
     // Method for writing to a file
