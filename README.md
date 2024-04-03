@@ -46,3 +46,13 @@ Sample Output when Window closed:
   Games filtered by word: piano
 
 ## Phase 4: Task 3
+
+### Refactoring Suggestions
+
+#### 1. Singleton Design Pattern for GamesManager
+
+Consider implementing the Singleton Design Pattern for the `GamesManager` class. As of now, I accidently have a rough implementation of the Singleton pattern, but by enforcing a single instance of `GamesManager` throughout the application, we can centralize control over game management.
+
+#### 2. Introduce a Game Logic Handler
+
+To enhance the separation of concerns and improve maintainability, introduce a new class (e.g., `GameLogicHandler`) responsible for managing the game logic. This class would encapsulate tasks such as managing game states, checking guesses, and determining game outcomes. By offloading these responsibilities from the `GameWindow` class, we can achieve a cleaner separation of concerns, making the codebase easier to understand, test, and maintain. This refactoring promotes better adherence to the Single Responsibility Principle (SRP) and improves the overall design of the application architecture.
