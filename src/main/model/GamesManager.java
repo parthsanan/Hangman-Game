@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class GamesManager {
 
     protected DataHandler dataHandler;
-    protected Hangman currentGame;    
     ArrayList<Hangman> loadedGames;
 
     protected String[] rookieWords;
@@ -32,7 +31,7 @@ public class GamesManager {
         };
         this.masterWords = new String[] {
                 "sesquipedalian", "antidisestablishmentarianism", "pulchritudinous",
-                "supercalifragilisticexpialidocious", "onomatopoeia", "hyperbolic", "polyethylene",
+                "onomatopoeia", "hyperbolic", "polyethylene",
                 "incomprehensibility", "plenipotentiary", "sesquicentennial", "sesquioxide", "antiestablishmentarian",
                 "supererogatory", "indefatigable", "mnemonic", "ambidextrous", "circumlocution", "perspicacious",
                 "antepenultimate", "indefatigable", "antiquarianism", "circumlocution", "supercilious",
@@ -41,6 +40,14 @@ public class GamesManager {
                 "antiquarianism", "antepenultimate"
         };
 
+    }
+
+    public void gamesFilteredByWord(String word) {
+        EventLog.getInstance().logEvent(new Event("Games filtered by word: " + word + "\n"));
+    }
+
+    public void gameAdded(Hangman game) {
+        EventLog.getInstance().logEvent(new Event("Game saved with secret word: " + game.getSecretWord() + "\n"));
     }
 
     public ArrayList<Hangman> getLoadedGames() {

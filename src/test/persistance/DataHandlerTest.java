@@ -38,7 +38,7 @@ public class DataHandlerTest {
         game.setScore(50);
 
         try {
-            dataHandler.saveGame(game);
+            dataHandler.saveGame(gamesManager, game);
             assertTrue(dataHandler.writeToFileCalled);
             savedJsonContent = new String(Files.readAllBytes(Paths.get(dataHandler.getFilePath())));
         } catch (IOException e) {
@@ -73,10 +73,10 @@ public class DataHandlerTest {
 
         Hangman game = new ClassicHangman("Novice", gamesManager);
 
-        assertThrows(IOException.class, () -> dataHandler.saveGame(game));
+        assertThrows(IOException.class, () -> dataHandler.saveGame(gamesManager, game));
 
         try {
-            dataHandler.saveGame(game);
+            dataHandler.saveGame(gamesManager, game);
             fail();
         } catch (IOException e) {
             assertEquals(e.getMessage(), "nonexistent\\file\\path (The system cannot find the path specified)");
@@ -85,15 +85,16 @@ public class DataHandlerTest {
 
     @Test
     void testWriteToFile() {
-        TestDataHandler dataHandler = new TestDataHandler();
-        String content = "Test content";
+        assertEquals(dataHandler.getFilePath(), "src/main/data/testGames.json");
+        String content = "[{\"result\":\"Won\"" +
+                ",\"difficulty\":\"Rookie\",\"score\":30,\"guessesLeft\":4,\"secretWord\":\"TestGameWord\"}]";
 
         try {
             dataHandler.writeToFile(content);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         try {
             String writtenContent = new String(Files.readAllBytes(Paths.get(dataHandler.getFilePath())),
                     StandardCharsets.UTF_8);

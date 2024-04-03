@@ -1,5 +1,6 @@
 package ui;
 
+import model.EventLog;
 import model.GamesManager;
 
 import javax.swing.*;
@@ -33,7 +34,8 @@ public class StartGUI extends JFrame implements ActionListener {
         initializeTabs(mainPanel, historyPanel, tabbedPane);
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    // EFFECTS: handles all behaviour related to buttons on the start GUI
+    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -89,17 +91,7 @@ public class StartGUI extends JFrame implements ActionListener {
         } else if (e.getSource() == filterByWordButton) {
 
             String word = JOptionPane.showInputDialog("Enter word to filter by:");
-            StringBuilder gameDetails = new StringBuilder();
-
-            for (int i = 0; i < manager.getLoadedGames().size(); i++) {
-
-                if (manager.getLoadedGames().get(i).getSecretWord().equals(word)) {
-
-                    gameDetails.append(manager.getLoadedGames().get(i).toString()).append("\n");
-
-                }
-
-            }
+            StringBuilder gameDetails = manager.getDataHandler().getGamesByWord(manager, word);
 
             if (gameDetails.length() == 0) {
 
@@ -119,7 +111,8 @@ public class StartGUI extends JFrame implements ActionListener {
         }
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    // EFFECTS: initialize button component of the start GUI
+    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
     public void initializeButtons(JPanel mainPanel, JPanel historyPanel) {
         mainPanel.setBackground(Color.BLACK);
         String textFont = "Monospaced";
@@ -187,11 +180,19 @@ public class StartGUI extends JFrame implements ActionListener {
         historyPanel.setBackground(Color.BLACK);
     }
 
+    // EFFECTS: initialize tab interface of the start GUI
     public void initializeTabs(JPanel mainPanel, JPanel historyPanel, JTabbedPane tabbedPane) {
         tabbedPane.addTab("Game", mainPanel);
         tabbedPane.addTab("History", historyPanel);
 
         this.add(tabbedPane);
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                EventLog.getInstance().iterator().forEachRemaining(event -> System.out.println(event.toString()));
+            }
+        });
+
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);

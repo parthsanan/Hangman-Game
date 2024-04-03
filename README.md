@@ -34,3 +34,13 @@ With multiple genres of varying difficulties and a timed mode, it removes all th
 - You can locate my visual component by navigating to view the hangman while the game is played.
 - You can save the state of the application by pressing save after finishing a game.
 - You can load all the previously played games by navigating to the Load Games option in the History Tab.
+
+## Phase 4: Task 2
+
+Sample Output when Window closed:
+
+- Tue Apr 02 23:29:16 PDT 2024 </br>
+  Game saved with secret word: piano
+
+- Tue Apr 02 23:29:24 PDT 2024 </br>
+  Games filtered by word: piano

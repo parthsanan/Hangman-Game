@@ -25,6 +25,7 @@ public class GameWindow extends JFrame implements ActionListener {
     private JButton submitGuessButton;
     private GamesManager manager;
 
+    // EFFECTS: Instantiates a new game window
     public GameWindow(GamesManager manager, String difficulty) {
 
         this.currentGame = new ClassicHangman(difficulty, manager);
@@ -33,7 +34,8 @@ public class GameWindow extends JFrame implements ActionListener {
         initializeFields();
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    // EFFECTS: handles all different types of button presses
+    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -104,6 +106,9 @@ public class GameWindow extends JFrame implements ActionListener {
 
                 if (currentGame.isGameWon()) {
 
+                    currentGame.setScore(currentGame.getScore() + 100);
+                    scoreLabel.setText("Score: " + currentGame.getScore());
+
                     JOptionPane.showMessageDialog(null, "Game Over!" + " You won!");
 
                 } else {
@@ -120,7 +125,7 @@ public class GameWindow extends JFrame implements ActionListener {
 
                 if (response == JOptionPane.YES_OPTION) {
                     try {
-                        manager.getDataHandler().saveGame(currentGame);
+                        manager.getDataHandler().saveGame(manager, currentGame);
                         JOptionPane.showMessageDialog(null, "Game Saved!");
                     } catch (IOException ioException) {
                         JOptionPane.showMessageDialog(null, "Error while saving game!");
@@ -136,7 +141,8 @@ public class GameWindow extends JFrame implements ActionListener {
 
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    // EFFECTS: initialize components of the GUI
+    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
     public void initializeFields() {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -150,7 +156,7 @@ public class GameWindow extends JFrame implements ActionListener {
         this.add(hangmanLabel, BorderLayout.EAST);
 
         visibleWordLabel = new JLabel("Word: " + currentGame.getVisibleWord());
-        visibleWordLabel.setBounds(50, 50, 300, 50);
+        visibleWordLabel.setBounds(50, 50, 350, 50);
         this.add(visibleWordLabel);
 
         responseLabel = new JLabel("GUESS!");

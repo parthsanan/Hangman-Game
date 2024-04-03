@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class DataHandler {
 
     protected String filePath;
-    protected FileWriter fileWriter;
     protected ArrayList<Hangman> gamesPlayed;
 
     public DataHandler() {
@@ -58,7 +57,7 @@ public class DataHandler {
     }
 
     // Save singular game to file
-    public void saveGame(Hangman game) throws IOException {
+    public void saveGame(GamesManager manager, Hangman game) throws IOException {
         JSONArray jsonArray;
 
         try {
@@ -77,6 +76,7 @@ public class DataHandler {
         jsonArray.put(jsonObject);
 
         writeToFile(jsonArray.toString());
+        manager.gameAdded(game);
     }
 
     // Method for writing to a file
@@ -88,6 +88,26 @@ public class DataHandler {
         }
     }
 
+    public StringBuilder getGamesByWord(GamesManager manager, String word) {
+
+        StringBuilder gameDetails = new StringBuilder();
+
+        for (Hangman game : manager.getLoadedGames()) {
+
+            if (game.getSecretWord().equals(word)) {
+
+                gameDetails.append(game.toString()).append("\n");
+
+            }
+
+        }
+
+        manager.gamesFilteredByWord(word);
+        return gameDetails;
+
+    }
+
+    // EFFECTS: returns high score of all Loaded Games
     public Integer getHighScore(GamesManager manager) {
 
         Integer highScore = 0;
