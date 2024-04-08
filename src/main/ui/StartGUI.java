@@ -2,12 +2,14 @@ package ui;
 
 import model.EventLog;
 import model.GamesManager;
+import model.Hangman;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class StartGUI extends JFrame implements ActionListener {
     private JButton rookieButton;
@@ -36,79 +38,91 @@ public class StartGUI extends JFrame implements ActionListener {
     }
 
     // EFFECTS: handles all behaviour related to buttons on the start GUI
-    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if (e.getSource() == rookieButton) {
-
-            this.dispose();
-            new GameWindow(manager, "Rookie");
-
+            startNewGame("Rookie");
         } else if (e.getSource() == noviceButton) {
-
-            this.dispose();
-            new GameWindow(manager, "Novice");
-
+            startNewGame("Novice");
         } else if (e.getSource() == masterButton) {
-
-            this.dispose();
-            new GameWindow(manager, "Master");
-
+            startNewGame("Master");
         } else if (e.getSource() == viewAllButton) {
-
-            if (manager.getLoadedGames().size() == 0) {
-
-                JOptionPane.showMessageDialog(null, "No games to view");
-
-            } else {
-
-                StringBuilder gameDetails = new StringBuilder();
-
-                for (int i = 0; i < manager.getLoadedGames().size(); i++) {
-
-                    gameDetails.append(manager.getLoadedGames().get(i).toString()).append("\n");
-
-                }
-
-                JTextArea textArea = new JTextArea(gameDetails.toString());
-                textArea.setEditable(false);
-                JScrollPane scrollPane = new JScrollPane(textArea);
-                scrollPane.setPreferredSize(new Dimension(500, 500));
-                JOptionPane.showMessageDialog(null, scrollPane, "Game Archive", JOptionPane.INFORMATION_MESSAGE);
-            }
-
+            viewAllGames();
         } else if (e.getSource() == loadAllButton) {
-
-            try {
-                manager.getDataHandler().loadGames(manager);
-                JOptionPane.showMessageDialog(null, manager.getLoadedGames().size() + " Games Loaded!");
-                highScoreLabel.setText("High Score: " + manager.getDataHandler().getHighScore(manager));
-            } catch (IOException ioException) {
-                JOptionPane.showMessageDialog(null, "Error!");
-
-            }
-
+            loadAllGames();
         } else if (e.getSource() == filterByWordButton) {
+            filterGamesByWord();
+        }
+    }
 
-            String word = JOptionPane.showInputDialog("Enter word to filter by:");
-            StringBuilder gameDetails = manager.getDataHandler().getGamesByWord(manager, word);
+    // EFFECTS: starts a new game with the given difficulty
+    private void startNewGame(String difficulty) {
+        this.dispose();
+        new GameWindow(manager, difficulty);
+    }
 
-            if (gameDetails.length() == 0) {
+    // EFFECTS: displays all games in a dialog
+    private void viewAllGames() {
+        if (manager.getLoadedGames().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No games to view");
+        } else {
+            displayGamesInDialog(manager.getLoadedGames());
+        }
+    }
 
-                JOptionPane.showMessageDialog(null, "No games found with word: " + word);
+    // EFFECTS: loads all games from the file
+    private void loadAllGames() {
+        try {
+            manager.getDataHandler().loadGames();
+            JOptionPane.showMessageDialog(null, manager.getLoadedGames().size() + " Games Loaded!");
+            highScoreLabel.setText("High Score: " + manager.getDataHandler().getHighScore(manager));
+        } catch (IOException ioException) {
+            JOptionPane.showMessageDialog(null, "Error!");
+        }
+    }
 
-            } else {
+    // EFFECTS: filters games by a word and displays them in a dialog
+    private void filterGamesByWord() {
+        String word = JOptionPane.showInputDialog("Enter word to filter by:");
+        StringBuilder gameDetails = manager.getDataHandler().getGamesByWord(word);
 
-                JTextArea textArea = new JTextArea(gameDetails.toString());
-                textArea.setEditable(false);
-                JScrollPane scrollPane = new JScrollPane(textArea);
-                scrollPane.setPreferredSize(new Dimension(500, 500));
-                JOptionPane.showMessageDialog(null, scrollPane, "Games with word: " + word,
-                        JOptionPane.INFORMATION_MESSAGE);
+        if (gameDetails.length() == 0) {
+            JOptionPane.showMessageDialog(null, "No games found with word: " + word);
+
+        } else {
+
+            JTextArea textArea = new JTextArea(gameDetails.toString());
+            textArea.setEditable(false);
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setPreferredSize(new Dimension(500, 500));
+            JOptionPane.showMessageDialog(null, scrollPane, "Games with word: " + word,
+                    JOptionPane.INFORMATION_MESSAGE);
+
+        }
+    }
+
+    // EFFECTS: displays games in a dialog
+    private void displayGamesInDialog(ArrayList<Hangman> games) {
+
+        if (games.isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "No games to view");
+
+        } else {
+
+            StringBuilder gameDetails = new StringBuilder();
+
+            for (int i = 0; i < games.size(); i++) {
+
+                gameDetails.append(games.get(i).toString()).append("\n");
 
             }
 
+            JTextArea textArea = new JTextArea(gameDetails.toString());
+            textArea.setEditable(false);
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setPreferredSize(new Dimension(500, 500));
+            JOptionPane.showMessageDialog(null, scrollPane, "Game Archive", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

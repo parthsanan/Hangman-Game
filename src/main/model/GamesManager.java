@@ -15,7 +15,7 @@ public class GamesManager {
     protected String[] masterWords;
 
     public GamesManager() {
-        this.dataHandler = new DataHandler();
+        this.dataHandler = new DataHandler(this);
         this.loadedGames = new ArrayList<>();
 
         this.rookieWords = new String[] {
@@ -42,18 +42,24 @@ public class GamesManager {
 
     }
 
+    // EFFECTS: Logs the event of a game being filtered by word
     public void gamesFilteredByWord(String word) {
         EventLog.getInstance().logEvent(new Event("Games filtered by word: " + word + "\n"));
     }
 
+    // EFFECTS: Logs the event of a game being added
     public void gameAdded(Hangman game) {
         EventLog.getInstance().logEvent(new Event("Game saved with secret word: " + game.getSecretWord() + "\n"));
     }
 
+    // MODIFIES: this
+    // EFFECTS: Returns the list of loaded games
     public ArrayList<Hangman> getLoadedGames() {
         return this.loadedGames;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Adds a game to the list of loaded games
     public void addToLoadedGames(Hangman game) {
         this.loadedGames.add(game);
     }

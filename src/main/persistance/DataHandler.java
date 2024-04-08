@@ -16,15 +16,17 @@ public class DataHandler {
 
     protected String filePath;
     protected ArrayList<Hangman> gamesPlayed;
+    protected GamesManager manager;
 
-    public DataHandler() {
+    public DataHandler(GamesManager manager) {
         this.filePath = "./src/main/data/games.json";
+        this.manager = manager;
         this.gamesPlayed = new ArrayList<Hangman>();
     }
 
     // EFFECTS: Load existing games from file
     @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
-    public void loadGames(GamesManager manager) throws IOException {
+    public void loadGames() throws IOException {
 
         manager.setLoadedGames(new ArrayList<>());
 
@@ -56,7 +58,7 @@ public class DataHandler {
     }
 
     // Save singular game to file
-    public void saveGame(GamesManager manager, Hangman game) throws IOException {
+    public void saveGame(Hangman game) throws IOException {
         JSONArray jsonArray;
 
         try {
@@ -88,7 +90,7 @@ public class DataHandler {
         }
     }
 
-    public StringBuilder getGamesByWord(GamesManager manager, String word) {
+    public StringBuilder getGamesByWord(String word) {
 
         StringBuilder gameDetails = new StringBuilder();
 
@@ -96,7 +98,7 @@ public class DataHandler {
 
             if (game.getSecretWord().equals(word)) {
 
-                gameDetails.append(game.toString()).append("\n");
+                gameDetails.append(game).append("\n");
 
             }
 

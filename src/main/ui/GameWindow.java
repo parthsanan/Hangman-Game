@@ -35,110 +35,95 @@ public class GameWindow extends JFrame implements ActionListener {
     }
 
     // EFFECTS: handles all different types of button presses
-    @SuppressWarnings({ "checkstyle:MethodLength", "checkstyle:SuppressWarnings" })
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if ((e.getSource() == submitGuessButton) || (e.getSource() == guessTextField)) {
+            handleGuess();
+        }
+    }
 
-            String strLetter = guessTextField.getText();
+    // EFFECTS: handles the guess input by the user
+    private void handleGuess() {
+        String strLetter = guessTextField.getText();
 
-            if (strLetter.length() != 1) {
+        if (strLetter.length() != 1) {
+            responseLabel.setText("Incorrect Guess!");
+        } else {
+            char charLetter = strLetter.charAt(0);
+            processGuess(charLetter);
+        }
+    }
 
-                responseLabel.setText("Incorrect Guess!");
+    // EFFECTS: processes the guess input by the user
+    private void processGuess(char guess) {
+        try {
+            Boolean guessCorrect = currentGame.checkGuessedLetter(guess);
 
+            if (guessCorrect) {
+                responseLabel.setText("Correct Guess!");
             } else {
-
-                char charLetter = strLetter.charAt(0);
-
-                try {
-
-                    Boolean guessCorrect = currentGame.checkGuessedLetter(charLetter);
-
-                    if (guessCorrect) {
-
-                        responseLabel.setText("Correct Guess!");
-
-                    } else {
-
-                        responseLabel.setText("Incorrect Guess!");
-                        guessesLeftLabel.setText("Guesses Left: " + (currentGame.getGuessesLeft()));
-
-                        switch (currentGame.getGuessesLeft()) {
-                            case 5:
-                                hangmanLabel.setIcon(new ImageIcon("src\\main\\assets\\images\\hangman1.jpg"));
-                                break;
-                            case 4:
-                                hangmanLabel.setIcon(new ImageIcon("src\\main\\assets\\images\\hangman2.jpg"));
-                                break;
-                            case 3:
-                                hangmanLabel.setIcon(new ImageIcon("src\\main\\assets\\images\\hangman3.jpg"));
-                                break;
-                            case 2:
-                                hangmanLabel.setIcon(new ImageIcon("src\\main\\assets\\images\\hangman4.jpg"));
-                                break;
-                            case 1:
-                                hangmanLabel.setIcon(new ImageIcon("src\\main\\assets\\images\\hangman5.jpg"));
-                                break;
-                            case 0:
-                                hangmanLabel.setIcon(new ImageIcon("src\\main\\assets\\images\\hangman6.jpg"));
-                                break;
-
-                            default:
-                                break;
-                        }
-
-                    }
-
-                } catch (GuessedLetterException guessedLetterException) {
-
-                    JOptionPane.showMessageDialog(null, "You already guessed that letter!");
-
-                }
-
-                guessTextField.setText("");
+                guessesLeftLabel.setText("Guesses Left: " + currentGame.getGuessesLeft());
+                responseLabel.setText("Incorrect Guess!");
+                updateHangmanImage();
             }
 
-            visibleWordLabel.setText("Word: " + currentGame.getVisibleWord());
-            scoreLabel.setText("Score: " + currentGame.getScore());
-
-            if (currentGame.isGameOver()) {
-
-                if (currentGame.isGameWon()) {
-
-                    currentGame.setScore(currentGame.getScore() + 100);
-                    scoreLabel.setText("Score: " + currentGame.getScore());
-
-                    JOptionPane.showMessageDialog(null, "Game Over!" + " You won!");
-
-                } else {
-
-                    JOptionPane.showMessageDialog(
-                            null, "Game Over!" + " You lost!" + "\n" + "The word was: "
-                                    + currentGame.getSecretWord());
-
-                }
-
-                int response = JOptionPane.showConfirmDialog(
-                        this, "Do you want to save the game?", "Save Game",
-                        JOptionPane.YES_NO_OPTION);
-
-                if (response == JOptionPane.YES_OPTION) {
-                    try {
-                        manager.getDataHandler().saveGame(manager, currentGame);
-                        JOptionPane.showMessageDialog(null, "Game Saved!");
-                    } catch (IOException ioException) {
-                        JOptionPane.showMessageDialog(null, "Error while saving game!");
-
-                    }
-                }
-
-                this.dispose();
-                new StartGUI(manager);
-            }
-
+        } catch (GuessedLetterException guessedLetterException) {
+            JOptionPane.showMessageDialog(null, "You already guessed that letter!");
         }
 
+        updateUI();
+        checkGameOver();
+    }
+
+    // EFFECTS: updates the hangman image based on the number of guesses left
+    private void updateHangmanImage() {
+        int guessesLeft = currentGame.getGuessesLeft();
+        String imagePath = "src\\main\\assets\\images\\hangman" + (6 - guessesLeft) + ".jpg";
+        hangmanLabel.setIcon(new ImageIcon(imagePath));
+    }
+
+    // EFFECTS: updates the UI based on the current game state
+    private void updateUI() {
+        guessTextField.setText("");
+        visibleWordLabel.setText("Word: " + currentGame.getVisibleWord());
+        scoreLabel.setText("Score: " + currentGame.getScore());
+    }
+
+    // EFFECTS: checks if the game is over and displays the appropriate message
+    private void checkGameOver() {
+        if (currentGame.isGameOver()) {
+            if (currentGame.isGameWon()) {
+                currentGame.setScore(currentGame.getScore() + 100);
+                scoreLabel.setText("Score: " + currentGame.getScore());
+                JOptionPane.showMessageDialog(null, "Game Over! You won!");
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Game Over! You lost!\n" + "The word was: " + currentGame.getSecretWord());
+            }
+
+            promptToSaveGame();
+            closeWindow();
+            new StartGUI(manager);
+        }
+    }
+
+    // EFFECTS: prompts the user to save the game
+    private void promptToSaveGame() {
+        int response = JOptionPane.showConfirmDialog(this, "Do you want to save the game?", "Save Game",
+                JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            try {
+                manager.getDataHandler().saveGame(currentGame);
+                JOptionPane.showMessageDialog(null, "Game Saved!");
+            } catch (IOException ioException) {
+                JOptionPane.showMessageDialog(null, "Error while saving game!");
+            }
+        }
+    }
+
+    // EFFECTS: closes the current window
+    private void closeWindow() {
+        this.dispose();
     }
 
     // EFFECTS: initialize components of the GUI

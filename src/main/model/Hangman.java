@@ -112,6 +112,7 @@ public abstract class Hangman {
 
     }
 
+    // EFFECTS: Return true if word guessed by user
     public boolean isGameWon() {
 
         return getVisibleWord().equals(secretWord);
@@ -149,6 +150,7 @@ public abstract class Hangman {
 
     }
 
+    // EFFECTS: Return modified string representation of Hangman object
     @Override
     public String toString() {
         return "Result: " + getResult() + "\n" + "Difficulty: " + getDifficulty() + "\n"

@@ -19,7 +19,7 @@ public class ClassicHangmanTest {
         void setupClassicHangmanTest() {
 
                 testGamesManager = new GamesManager();
-                testDataHandler = new DataHandler();
+                testDataHandler = new DataHandler(testGamesManager);
 
                 testClassicHangmanRookie = new ClassicHangman("Rookie", testGamesManager);
                 testClassicHangmanNovice = new ClassicHangman("Novice", testGamesManager);

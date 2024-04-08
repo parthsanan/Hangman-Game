@@ -21,9 +21,9 @@ public class DataHandlerTest {
 
     @BeforeEach
     void setUp() {
-        dataHandler = new TestDataHandler();
-        dataHandler.setFilePath("src/main/data/testGames.json");
         gamesManager = new GamesManager();
+        dataHandler = new TestDataHandler(gamesManager);
+        dataHandler.setFilePath("src/main/data/testGames.json");
     }
 
     @Test
@@ -38,7 +38,7 @@ public class DataHandlerTest {
         game.setScore(50);
 
         try {
-            dataHandler.saveGame(gamesManager, game);
+            dataHandler.saveGame(game);
             assertTrue(dataHandler.writeToFileCalled);
             savedJsonContent = new String(Files.readAllBytes(Paths.get(dataHandler.getFilePath())));
         } catch (IOException e) {
@@ -73,10 +73,10 @@ public class DataHandlerTest {
 
         Hangman game = new ClassicHangman("Novice", gamesManager);
 
-        assertThrows(IOException.class, () -> dataHandler.saveGame(gamesManager, game));
+        assertThrows(IOException.class, () -> dataHandler.saveGame(game));
 
         try {
-            dataHandler.saveGame(gamesManager, game);
+            dataHandler.saveGame(game);
             fail();
         } catch (IOException e) {
             assertEquals(e.getMessage(), "nonexistent\\file\\path (The system cannot find the path specified)");
@@ -136,7 +136,7 @@ public class DataHandlerTest {
         }
 
         try {
-            dataHandler.loadGames(gamesManager);
+            dataHandler.loadGames();
         } catch (IOException e) {
             fail();
         }
@@ -155,7 +155,7 @@ public class DataHandlerTest {
         dataHandler.setFilePath("nonexistent/file/path");
 
         try {
-            dataHandler.loadGames(gamesManager);
+            dataHandler.loadGames();
             fail();
         } catch (IOException e) {
             assertEquals(e.getMessage(), "nonexistent\\file\\path");
@@ -166,6 +166,10 @@ public class DataHandlerTest {
 
     static class TestDataHandler extends DataHandler {
         boolean writeToFileCalled = false;
+
+        public TestDataHandler(GamesManager manager) {
+            super(manager);
+        }
 
         @Override
         public void writeToFile(String content) throws IOException {
