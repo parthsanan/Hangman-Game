@@ -27,7 +27,6 @@ public class GameWindow extends JFrame implements ActionListener {
 
     // EFFECTS: Instantiates a new game window
     public GameWindow(GamesManager manager, String difficulty) {
-
         this.currentGame = new ClassicHangman(difficulty, manager);
         this.manager = manager;
 
